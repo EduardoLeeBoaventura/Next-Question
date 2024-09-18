@@ -1,0 +1,103 @@
+<?php
+
+require_once __DIR__ . '/../../config/config.php';
+
+$topics = Database::select_query($conn, "SELECT id, `name` FROM questionnaire_topic");
+
+$questions = Database::select_query($conn, "SELECT id, `quest`, options, coption FROM questions");
+
+var_dump($questions);
+
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Questionário</title>
+</head>
+<body>
+    <h1>Criar Questionário</h1>
+    <form id="questionnaires">
+        <label for="name">Nome: </label>
+        <input id="name" name="name" type="text">
+        <label for="description">Descrição: </label>
+        <textarea id="description" name="description" cols="30" rows="10"></textarea>
+        <label for="topic">Tópico: </label>
+        <select id="topic" name="topic">
+            <option value="">Selecione um tópico</option>
+            <?php foreach ($topics as $row) { ?>
+                <option value='<?= $row['id'] ?>'><?= $row['name'] ?></option>
+            <?php } ?>
+        </select>
+        <br>
+        <label for="questions">Questões: </label>
+        <select id="questions" name="questions[]" multiple>
+            <option value="">Selecione as questões</option>
+            <?php foreach ($questions as $row) { ?>
+                <option value='<?= $row['id'] ?>'><?= $row['quest'] ?></option>
+            <?php } ?>
+        </select>
+        <input type="submit" value="Criar">
+    </form>
+    <h2>Criar Questão</h2>
+    <form id="question">
+        <label for="question">Pergunta: </label>
+        <input id="question" name="question" type="text">
+        <label for="options">Opções: </label>
+        <input id="options" name="options" type="text" placeholder="Separe as opções por dois espaços">
+        <label for="correct">Alternativa correta: </label>
+        <input id="correct" name="correct" type="text" pattern="[A-Z]" placeholder="A, B, C, D">
+        <input type="submit" value="Criar Questão">
+    </form>
+    <script>
+        // formulário de criar questionário
+        const form = document.querySelector('#questionnaires')
+        form.addEventListener('submit', event => {
+            event.preventDefault()
+    
+            const data = new FormData(form)
+    
+            fetch('../controllers/criar_questionnaire.php', {
+                method: 'POST',
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    alert('Questionário criado com sucesso!')
+                    console.log(data)
+                } else {
+                    alert('Erro ao criar questionário, tente novamente mais tarde.')
+                }
+            })
+            .catch(error => console.log(error))
+
+        })
+
+        // formulário de criar questão 
+
+        const formQuestion = document.querySelector('#question')
+        formQuestion.addEventListener('submit', event => {
+            event.preventDefault()
+
+            const data = new FormData(formQuestion)
+
+            fetch('../controllers/criar_questions.php', {
+                method: 'POST',
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    alert('Questão criada com sucesso!')
+                    console.log(data)
+                } else {
+                    alert('Erro ao criar quest')
+                }
+            })
+            .catch(error => console.log(error))
+        })
+    </script>
+</body>
+</html>
