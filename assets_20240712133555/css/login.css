@@ -1,0 +1,38 @@
+div.container{
+  width: 300px !important;
+  max-width: 300px !important;
+}
+
+#logo{
+  height: 100px;
+}
+
+@media (min-width:900px) {
+  div.container{
+    width: 900px !important;
+    max-width: 900px !important;
+
+    border: none !important;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  div.container > *{
+    width: 50% !important;
+  }
+
+  #logo{
+    height: auto;
+    width: auto;
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  #form-login{
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 10px;
+  }
+}

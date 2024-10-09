@@ -1,0 +1,182 @@
+{
+  "/": {
+    "title": "Página Inicial",
+    "requirements": ["auth"],
+    "alternative": {"auth": "/login.php"},
+    "related": [
+      "/gerenciamento/dashboard.php"
+    ]
+  },
+  "/sair.php": {
+    "title": "Página de Logout",
+    "requirements": ["auth"],
+    "alternative": {"auth": "/login.php"},
+    "related": []
+  },
+  "/login.php": {
+    "title": "Página de Login",
+    "requirements": ["not_auth"],
+    "alternative": {"not_auth": "/"},
+    "related": []
+  },
+  
+  "/gerenciamento/editar_conta.php": {
+    "title": "Editar Dados da Conta",
+    "requirements": ["auth"],
+    "alternative": {
+      "auth": "/login.php"
+    },
+    "related": []
+  },
+  
+  "/gerenciamento/cadastros/usuarios/": {
+    "title": "Cadastros de Usuários",
+    "privilege": "C|R+|U+|D+",
+    "requirements": ["auth", "privilege"],
+    "alternative": {
+      "auth": "/login.php",
+      "privilege": "/"
+    },
+    "related": [
+      "/gerenciamento/cadastros/usuarios/cadastro.php",
+      "/gerenciamento/cadastros/usuarios/listagem.php",
+      "/gerenciamento/cadastros/usuarios/edicao.php",
+      "/gerenciamento/cadastros/usuarios/consulta_usuarios.php",
+      "/gerenciamento/cadastros/usuarios/alterar_senha.php",
+      "/gerenciamento/cadastros/usuarios/vinculo_niveis.php"
+    ]
+  },
+  
+  "/gerenciamento/cadastros/niveis_acessos/": {
+    "title": "Cadastros de Níveis de Acessos",
+    "privilege": "C|R|U+|D+",
+    "requirements": ["auth", "privilege"],
+    "alternative": {
+      "auth": "/login.php",
+      "privilege": "/"
+    },
+    "related": [
+      "/gerenciamento/cadastros/usuarios/cadastro.php",
+      "/gerenciamento/cadastros/usuarios/listagem.php",
+      "/gerenciamento/cadastros/usuarios/edicao.php",
+      "/gerenciamento/cadastros/usuarios/vinculo_privilegios.php"
+    ]
+  },
+
+  "/gerenciamento/emissoes/": {
+    "title": "Painel de Emissões",
+    "privilege": "R",
+    "requirements": ["auth", "privilege"],
+    "alternative": {
+      "auth": "/login.php",
+      "privilege": "/"
+    },
+    "related": [
+      "/gerenciamento/emissoes/options.php",
+      "/gerenciamento/emissoes/documentos/index.php",
+      "/gerenciamento/emissoes/documentos/auxiliares/definicoes_chaves_get_emissoes.php",
+      "/gerenciamento/emissoes/documentos/auxiliares/funcoes.php"
+    ]
+  },
+
+  "/api/get/usuarios/consulta_usuarios.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/get/usuarios/consulta_vinculo_niveis.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/get/usuarios/excluir_vinculo_niveis.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/get/usuarios/consulta_acoes_privilegios.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/get/usuarios/consulta_vinculo_privilegios.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/get/usuarios/excluir_vinculo_privilegios.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+
+  "/api/get/niveis_acessos/consulta_acoes_privilegios.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/get/niveis_acessos/consulta_vinculo_privilegios.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/get/niveis_acessos/excluir_vinculo_privilegios.php": {
+    "requirements": ["auth", "get"],
+    "alternative": {},
+    "related": []
+  },
+
+
+  "/api/post/usuarios/login.php": {
+    "requirements": ["post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/usuarios/cadastro.php": {
+    "requirements": ["post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/usuarios/edicao.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/usuarios/alterar_senha.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/usuarios/vinculo_niveis.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/usuarios/vinculo_privilegios.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  },
+  
+  "/api/post/niveis_acessos/cadastro.php": {
+    "requirements": ["post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/niveis_acessos/edicao.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/niveis_acessos/vinculo_privilegios.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  },
+
+  "/cadastro_livre/usuarios/": {
+    "requirements": [],
+    "alternative": {},
+    "related": []
+  }
+}

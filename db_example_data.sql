@@ -1,0 +1,1 @@
+INSERT INTO `usuarios` (ref, nome, email, senha, telefone, cpf, geral, desenvolvedor, situacao) VALUES ('YA8EJ-TSYB-XESEG-BN76NQT4','Jonta Sancar','jonta@coude.dev.br', '$2y$10$buMcysr4uQessM23xbcOVOiH4G3FPHpquxWBpC7AYNpT8694fgHR6','(00) 0 0000-0000','000.000.000-00',1,1,'ATIVO');

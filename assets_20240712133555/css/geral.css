@@ -1,0 +1,16 @@
+td, th{
+  text-align: center;
+}
+
+[readonly]{
+  background-color: #bbb !important;
+  cursor: not-allowed;
+}
+
+.form-search{
+  display: none;
+}
+
+small{
+  font-size: .7em;
+}

@@ -1,0 +1,32 @@
+{
+    "name": "jdscf/system",
+    "version": "0.1.20",
+    "description": "Sistema de gerenciamento de campeonatos de tiro",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "System\\": "src/"
+        },
+        "files": [
+          "src/config.php"
+        ]
+    },
+    "scripts": {
+        "start": "php -S localhost:80"
+    },
+    "authors": [
+        {
+            "name": "Agência DP"
+        },
+        {
+            "name": "Jonta Sancar"
+        },
+        {
+            "name": "Nicholas Morais"
+        },
+        {
+            "name": "Welington"
+        }
+    ],
+    "require": {}
+}

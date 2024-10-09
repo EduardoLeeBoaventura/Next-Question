@@ -1,0 +1,85 @@
+#sidebar{
+  width: 80px;
+  transition: .3s;
+  overflow: hidden;
+}
+#sidebar.visible{
+  width: 280px;
+}
+
+#sidebar header{
+  text-align: center;
+}
+
+#logomarca{
+  background-color: #ddd;
+  padding: 5px;
+  border-radius: 50%;
+  max-height: 100px;
+  max-width: 100%;
+  transition: .3s;
+}
+
+#sidebar ul{
+  list-style: none;
+}
+
+#sidebar .nav-item{
+  width: 100%;
+}
+
+#sidebar .nav-item > a{
+  position: relative;
+  padding: 0px;
+  padding-left: 12px;
+  padding-bottom: 15px;
+}
+
+#sidebar .nav-item .text{
+  white-space: nowrap;
+  opacity: 0;
+  transition: .5s;
+}
+#sidebar.visible .nav-item .text{
+  opacity: 1 !important;
+}
+
+#sidebar .nav-item ul .material-symbols-outlined{
+  font-size: .9em;
+}
+
+#sidebar .nav-item ul{
+  transition: .3s;
+  overflow: hidden;
+}
+
+#sidebar .nav-item ul.show{
+  height: 0px;
+}
+#sidebar.visible .nav-item ul.show{
+  height: fit-content;
+}
+
+#sidebar .nav-item .hide{
+  height: 0px !important;
+}
+
+#sidebar .nav-item.active > a::after{
+  content: '';
+  background-color: #fff;
+  display: block;
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  position: absolute;
+  top: 11px;
+  right: 10px;
+
+  opacity: 0;
+  transition: .5s;
+}
+#sidebar.visible .nav-item.active > a::after{
+  opacity: 1;
+}

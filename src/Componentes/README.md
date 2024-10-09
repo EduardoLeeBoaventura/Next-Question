@@ -1,0 +1,1 @@
+Pasta para adicionar os componentes do sistema (cabeçalhos, rodapés, barras laterais, ...)

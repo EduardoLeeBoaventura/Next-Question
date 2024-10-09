@@ -1,0 +1,1 @@
+Este diretório visa conter as funcionalidades de consultas necessárias no sistema e que não são comportadas na renderização dinâmica das páginas
