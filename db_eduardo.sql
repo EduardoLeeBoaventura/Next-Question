@@ -10,6 +10,7 @@ CREATE TABLE `usuarios` (
   `email` varchar(100) NOT NULL UNIQUE,
   `senha` varchar(255) NOT NULL,
   `telefone` varchar(50) DEFAULT NULL UNIQUE,
+  `cpf` varchar(50) DEFAULT NULL UNIQUE,
   `geral` tinyint(1) DEFAULT '0' COMMENT 'Quando verdadeiro, indica que o usuário tem acesso a todos os setores/filiais/[...]',
   `desenvolvedor` tinyint(1) DEFAULT '0' COMMENT 'Quando verdadeiro, indica que o usuário é desenvolvedor',
   `situacao` enum('ATIVO','INATIVO','PENDENTE') DEFAULT 'PENDENTE',
@@ -92,7 +93,7 @@ CREATE TABLE `tipos` (
     `ref` varchar(25) NOT NULL,
     `nome` VARCHAR(50) NOT NULL UNIQUE,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
-    `visibilidade` tinyint(1) DEFAULT '1',
+    `visibilidade` tinyint(1) DEFAULT '1'
 );
 CREATE TABLE `questionario` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
