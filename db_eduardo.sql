@@ -1,56 +1,138 @@
-DROP DATABASE IF EXISTS `questionnaire`;
-CREATE DATABASE `questionnaire`;
+DROP DATABASE IF EXISTS `questionario`;
+CREATE DATABASE `questionario`;
 
-USE `questionnaire`;
+USE `questionario`;
 
-CREATE TABLE `type_user` (
+CREATE TABLE `usuarios` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `ref` varchar(25) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,
+  `senha` varchar(255) NOT NULL,
+  `telefone` varchar(50) DEFAULT NULL UNIQUE,
+  `geral` tinyint(1) DEFAULT '0' COMMENT 'Quando verdadeiro, indica que o usuário tem acesso a todos os setores/filiais/[...]',
+  `desenvolvedor` tinyint(1) DEFAULT '0' COMMENT 'Quando verdadeiro, indica que o usuário é desenvolvedor',
+  `situacao` enum('ATIVO','INATIVO','PENDENTE') DEFAULT 'PENDENTE',
+  `visibilidade` tinyint(1) DEFAULT '1',
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuario_cadastro` int DEFAULT NULL,
+  `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `usuario_edicao` int DEFAULT NULL
+);
+CREATE TABLE `usuarios_privilegios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ref` varchar(25) NOT NULL,
+  `tipo` enum('BLOQUEAR', 'AUTORIZAR') DEFAULT 'AUTORIZAR' NOT NULL,
+  `pagina` varchar(255) NOT NULL,
+  `permissoes` varchar(20) DEFAULT 'R' NOT NULL COMMENT 'C = Create (criar), R = Read (ver / listar), U = Update (editar), D = Delete (exclusão - visibilidade para 0), E = Emit (emissão de documentos). O `+` qualifica para ações administrativas, seja de leitura, escrita ou exclusão (Ex.: R+, E+, D+). Os valores devem ser separados por `|`',
+  `id_usuario` int NOT NULL,
+  `situacao` enum('ATIVO','INATIVO') DEFAULT 'ATIVO',
+  `visibilidade` tinyint(1) DEFAULT '1',
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuario_cadastro` int DEFAULT NULL,
+  `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `usuario_edicao` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
+  FOREIGN KEY (`usuario_cadastro`) REFERENCES `usuarios` (`id`),
+  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios` (`id`)
+);
+
+
+
+
+
+
+CREATE TABLE `niveis_acessos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ref` varchar(25) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `situacao` enum('ATIVO','INATIVO') DEFAULT 'ATIVO',
+  `visibilidade` tinyint(1) DEFAULT '1',
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuario_cadastro` int DEFAULT NULL,
+  `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `usuario_edicao` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`usuario_cadastro`) REFERENCES `usuarios` (`id`),
+  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios` (`id`)
+);
+CREATE TABLE `niveis_privilegios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ref` varchar(25) NOT NULL,
+  `tipo` enum('BLOQUEAR', 'AUTORIZAR') DEFAULT 'AUTORIZAR' NOT NULL,
+  `pagina` varchar(255) NOT NULL,
+  `permissoes` varchar(20) DEFAULT 'R' NOT NULL COMMENT 'C = Create (criar), R = Read (ver / listar), U = Update (editar), D = Delete (exclusão - visibilidade para 0), E = Emit (emissão de documentos). O `+` qualifica para ações administrativas, seja de leitura, escrita ou exclusão (Ex.: R+, E+, D+). Os valores devem ser separados por `|`',
+  `id_nivel` int NOT NULL,
+  `situacao` enum('ATIVO','INATIVO') DEFAULT 'ATIVO',
+  `visibilidade` tinyint(1) DEFAULT '1',
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuario_cadastro` int DEFAULT NULL,
+  `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `usuario_edicao` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_nivel`) REFERENCES `niveis_acessos` (`id`),
+  FOREIGN KEY (`usuario_cadastro`) REFERENCES `usuarios` (`id`),
+  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios` (`id`)
+);
+CREATE TABLE `usuarios_conn_niveis` (
+  `id_usuario` int NOT NULL,
+  `id_nivel` int NOT NULL,
+  FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
+  FOREIGN KEY (`id_nivel`) REFERENCES `niveis_acessos` (`id`)
+);
+
+
+
+
+
+
+CREATE TABLE `tipos` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL UNIQUE,
+    `ref` varchar(25) NOT NULL,
+    `nome` VARCHAR(50) NOT NULL UNIQUE,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
-	`regist_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `edit_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `visibilidade` tinyint(1) DEFAULT '1',
 );
-
-CREATE TABLE `user` (
+CREATE TABLE `questionario` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL UNIQUE,
-    `login` VARCHAR(100) NOT NULL UNIQUE,
-    `password` VARCHAR(255) NOT NULL,
+    `ref` varchar(25) NOT NULL,
+    `nome` VARCHAR(100) NOT NULL,
+    `autor` INT, -- NOT NULL,
+    `tipo` INT NOT NULL,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
-    `id_type_user` INT, -- NOT NULL,
-    `regist_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `edit_date` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-	-- FOREIGN KEY (`id_type_user`) REFERENCES `type_user`(`id`)
+    `descricao` TEXT,
+    `visibilidade` tinyint(1) DEFAULT '1',
+    FOREIGN KEY (`tipo`) REFERENCES `tipos`(`id`),
+	FOREIGN KEY (`autor`) REFERENCES `usuarios`(`id`)
 );
-
-CREATE TABLE `questionnaire_topic` (
+CREATE TABLE `perguntas` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(50) NOT NULL UNIQUE,
-    `status` ENUM('ativo','inativo') DEFAULT 'ativo'
+    `ref` varchar(25) NOT NULL,
+    `pergunta` TEXT NOT NULL,
+    `tipo` INT NOT NULL,
+    `opcoes` TEXT COMMENT 'As opções devem estar padronizadas',
+    `coption` VARCHAR(1),
+    `visibilidade` tinyint(1) DEFAULT '1',
+    FOREIGN KEY (`tipo`) REFERENCES `tipos`(`id`)
+);
+CREATE TABLE `questionario_conn_perguntas` (
+	`id_questionario` INT NOT NULL,
+    `id_pergunta` INT NOT NULL,
+    FOREIGN KEY (`id_questionario`) REFERENCES `questionario`(`id`),
+    FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`)
 );
 
-CREATE TABLE `questionnaire` (
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL,
-    `id_user_author` INT, -- NOT NULL,
-    `id_topic` INT NOT NULL,
-    `status` ENUM('ativo','inativo') DEFAULT 'ativo',
-    `description` TEXT,
-    FOREIGN KEY (`id_topic`) REFERENCES `questionnaire_topic`(`id`),
-	FOREIGN KEY (`id_user_author`) REFERENCES `user`(`id`)
-);
 
-CREATE TABLE `questions` (
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `quest` TEXT NOT NULL,
-    `options` TEXT COMMENT 'As opções devem estar padronizadas',
-    `coption` VARCHAR(1)
-);
 
-CREATE TABLE `conn_question` (
-	`id_questionnaire` INT NOT NULL,
-    `id_quest` INT NOT NULL,
-    FOREIGN KEY (`id_questionnaire`) REFERENCES `questionnaire`(`id`),
-    FOREIGN KEY (`id_quest`) REFERENCES `questions`(`id`)
+
+
+
+CREATE TABLE `logs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ref` varchar(25) NOT NULL,
+  `erro` text NOT NULL,
+  `auxiliar` text NOT NULL,
+  `data_cadastro` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 );
