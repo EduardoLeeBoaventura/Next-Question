@@ -118,11 +118,9 @@ CREATE TABLE `perguntas` (
 	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `pergunta` TEXT NOT NULL,
-    `tipo` INT NOT NULL,
     `opcoes` TEXT COMMENT 'As opções devem estar padronizadas',
     `coption` VARCHAR(1),
-    `visibilidade` tinyint(1) DEFAULT '1',
-    FOREIGN KEY (`tipo`) REFERENCES `tipos`(`id`)
+    `visibilidade` tinyint(1) DEFAULT '1'
 );
 CREATE TABLE `questionario_conn_perguntas` (
 	  `id_questionario` INT NOT NULL,
