@@ -53,34 +53,14 @@ class PerguntasConnTipos
     return $response->result;
   }
 
-  public function listar($conditions = null, $limit_min = 100, $limit_max = null)
+  public function listar($limit_min = 100, $limit_max = null)
   {
     $columns = [
-      "N.id",
-      "N.ref",
-      "N.nome nivel"
+      "tipos_conn_perguntas.id_tipo",
+      "tipos_conn_perguntas.id_pergunta"
     ];
 
-    $where = [
-      ["N.visibilidade", 1]
-    ];
-
-    if(!empty($conditions)){
-      array_push($where, ...$conditions);
-    }
-
-    $response = $this->model->select($columns, $where, null, null, null, $limit_min, $limit_max);
-
-    if($response->result === false){
-      $_SESSION["ref_log"] = false;
-    } else {
-      foreach($response->result as $k => $v){
-        $niveis_acessos_handler = new NiveisAcessos();
-        $nivel = $niveis_acessos_handler->listar([["ref", $v['ref']]]);
-
-        $response->result[$k] = $nivel[0];
-      }
-    }
+    $response = $this->model->select($columns, null, null, null, null, $limit_min, $limit_max);
 
     return $response->result;
   }

@@ -54,99 +54,10 @@ class Perguntas
       "visibilidade",
     ];
 
-    $conditions_usuarios = [
-      ["visibilidade", 1]
-    ];
-
-    if(!empty($conditions)){
-      array_push($conditions_usuarios, ...$conditions);
-    }
-
-    $usuarios = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);
-
-    $response = false;
-    if($usuarios->result !== false && arrayLength($usuarios->result) > 0){
-      $response = $usuarios->result;
-
-      foreach ($response as $key => $value) {
-        $tipos = new Tipos();
-        $conditions = [
-          ["id_pergunta", $value['id']]
-        ];
-        $privilegios = $tipos->listar($conditions);
-
-        $perguntas_conn_tipos = new PerguntasConnTipos();
-        $conditions = [
-          ["perguntas_conn_tipos.id_tipo", $value['id']],
-          ["N.situacao", "ATIVO"]
-        ];
-        $niveis_acessos = $perguntas_conn_tipos->listar($conditions);
-        $niveis_privilegios = $this->returnsNiveisPrivilegios($niveis_acessos);
-
-        $privilegios = $this->mergePrivileges($niveis_privilegios, $privilegios);
-        
-        $response[$key]['privilegios'] = $privilegios;
-      }
-    }
+    $perguntas = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);
+    $response = $perguntas->result;
     
     return $response;
-  }
-
-  public function listarParaConsulta($conditions = null, $limit_min = 100, $limit_max = null)
-  {
-    $usuarios = $this->listar($conditions, $limit_min, $limit_max);
-
-    $response = false;
-    if(is_array($usuarios) && arrayLength($usuarios) > 0){
-      $response = $usuarios[0];
-    }
-
-    return $response;
-  }
-
-  public function hideData($data)
-  {
-    $sub_data = @substr(@$data, -5);
-
-    return $sub_data;
-  }
-
-  public function listarParaCertificado($usuario){
-    $conditions = [
-      ["ref", $usuario]
-    ];
-
-    $columns = [
-      "nome",
-      "cpf",
-      "telefone"
-    ];
-    
-    $response = $this->model->select($columns, $conditions);
-
-    return $response->result !== false ? $response->result : false;
-  }
-
-  public function alterarSenha($senha, $senha_autorizacao, $conditions){
-    if(password_verify($senha_autorizacao, USER_INFO['senha'])){
-      $data = [
-        "senha" => password_hash($senha, PASSWORD_DEFAULT)
-      ];
-
-      $response = $this->model->update($data, $conditions);
-
-      if(!empty($response->ref_log)){
-        $_SESSION['ref_log'] = $response->ref_log;
-        return false;
-      } else {
-        return true;
-      }
-
-    } else {
-      $_SESSION['ref_log'] = "senha de autorização invalida";
-
-      return false;
-    }
   }
 
   public function returnsIdByRef($ref)
