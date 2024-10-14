@@ -56,9 +56,9 @@ class PerguntasConnTipos
   public function listar($limit_min = 100, $limit_max = null)
   {
     $columns = [
-      "tipos_conn_perguntas.id_tipo",
-      "tipos_conn_perguntas.id_pergunta"
-    ];
+      "T.nome",
+      "P.pergunta"
+    ];    
 
     $response = $this->model->select($columns, null, null, null, null, $limit_min, $limit_max);
 
