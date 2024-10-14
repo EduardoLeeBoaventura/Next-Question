@@ -11,7 +11,7 @@ use Handlers\SQL_CRUD;
 use System\Controller\Tipos;
 use System\Controller\PerguntasConnTipos;
 
-class Perguntas
+class Pergunta
 {
   private $model = null;
 
@@ -51,7 +51,7 @@ class Perguntas
       "tipo",
       "opcoes",
       "coption",
-      "visibilidade",
+      "visibilidade"
     ];
 
     $perguntas = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);

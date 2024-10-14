@@ -7,7 +7,7 @@ require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handle
 
 use System\Model\TiposConnPerguntas as ModelPerguntasConnTipos;
 use System\Controller\Tipos;
-use System\Controller\Perguntas;
+use System\Controller\Pergunta;
 
 class PerguntasConnTipos
 {
@@ -21,7 +21,7 @@ class PerguntasConnTipos
   public function criar($perguntas, $tipos)
   {
     $tipos      = new Tipos();
-    $perguntas  = new Perguntas();
+    $perguntas  = new Pergunta();
     $data = [
       "id_tipo"   => $tipos->returnsIdByRef($tipos),
       "id_pergunta" => $perguntas->returnsIdByRef($perguntas)

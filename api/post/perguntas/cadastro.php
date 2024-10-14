@@ -1,14 +1,14 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
-  use System\Controller\Perguntas;
+  use System\Controller\Pergunta;
 
   $_POST['pergunta'] = "Como sabemos o que sabemos?";
   $_POST['opcoes'] = "typ";
   $_POST['opcao_correta'] = "Nao a resposta certa";
 
   if(!empty($_POST)){
-    $pergunta = new Perguntas();
+    $pergunta = new Pergunta();
 
     $data = [
         "pergunta" => $_POST['pergunta'],
