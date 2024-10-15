@@ -14,12 +14,14 @@
         "pergunta" => $_POST['pergunta'],
         "opcoes" => $_POST['opcoes'],
         "coption" => $_POST['opcao_correta'],
-    ];
-    $response = $pergunta->criar($data);
+      ];
+      $response = $pergunta->criar($data);
+      // var_dump($response);
     if($response !== false){
         $_SESSION['status_msg'] = "Ação concluida com sucesso";
-        var_dump($response);
-    }
-  } else{
-        $_SESSION['status_msg'] = "Dados inválidos ou insuficientes";
+    } else {
+      $_SESSION['status_msg'] = "Dados inválidos ou insuficientes";
+  }
+  } else {
+    $_SESSION['status_msg'] = "Dados inválidos ou insuficientes";
   }

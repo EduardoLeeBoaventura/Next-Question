@@ -20,11 +20,11 @@ class PerguntasConnTipos
 
   public function criar($perguntas, $tipos)
   {
-    $tipos      = new Tipos();
-    $perguntas  = new Pergunta();
+    $tipo      = new Tipos();
+    $pergunta  = new Pergunta();
     $data = [
-      "id_tipo"   => $tipos->returnsIdByRef($tipos),
-      "id_pergunta" => $perguntas->returnsIdByRef($perguntas)
+      "id_tipo"   => $tipo->returnsIdByRef($tipos),
+      "id_pergunta" => $pergunta->returnsIdByRef($perguntas)
     ];
     $response = $this->model->insert($data);
     return $response->result;
