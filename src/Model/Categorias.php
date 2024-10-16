@@ -6,8 +6,8 @@
 
     use Handlers\SQL_CRUD;
 
-    class Tipos extends SQL_CRUD{
-        private $table = "tipos";
+    class Categorias extends SQL_CRUD{
+        private $table = "categorias";
 
         public function insert(Array $data) : Object{
             $response = parent::execInsert($this->table, $data);

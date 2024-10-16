@@ -88,30 +88,23 @@ CREATE TABLE `usuarios_conn_niveis` (
 
 
 
-CREATE TABLE `tipos` (
+CREATE TABLE `categorias` (
 	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `nome` VARCHAR(50) NOT NULL UNIQUE,
+    `descricao` TEXT,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
     `visibilidade` tinyint(1) DEFAULT '1'
-);
-CREATE TABLE `tipos_conn_perguntas` (
-	  `id_tipo` INT NOT NULL,
-    `id_pergunta` INT NOT NULL,
-    FOREIGN KEY (`id_tipo`) REFERENCES `tipos`(`id`),
-    FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`)
 );
 
 CREATE TABLE `questionario` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `nome` VARCHAR(100) NOT NULL,
-    `autor` INT, -- NOT NULL,
-    `tipo` INT NOT NULL,
+    `autor` INT NOT NULL,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
     `descricao` TEXT,
     `visibilidade` tinyint(1) DEFAULT '1',
-    FOREIGN KEY (`tipo`) REFERENCES `tipos`(`id`),
 	FOREIGN KEY (`autor`) REFERENCES `usuarios`(`id`)
 );
 CREATE TABLE `perguntas` (
@@ -122,6 +115,20 @@ CREATE TABLE `perguntas` (
     `coption` VARCHAR(1),
     `visibilidade` tinyint(1) DEFAULT '1'
 );
+CREATE TABLE `categorias_conn_perguntas` (
+	  `id_categoria` INT NOT NULL,
+    `id_pergunta` INT NOT NULL,
+    FOREIGN KEY (`id_categoria`) REFERENCES `categorias`(`id`),
+    FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`)
+);
+
+CREATE TABLE `categorias_conn_questionario` (
+	  `id_categoria` INT NOT NULL,
+    `id_questionario` INT NOT NULL,
+    FOREIGN KEY (`id_categoria`) REFERENCES `categorias`(`id`),
+    FOREIGN KEY (`id_questionario`) REFERENCES `questionario`(`id`)
+);
+
 CREATE TABLE `questionario_conn_perguntas` (
 	  `id_questionario` INT NOT NULL,
     `id_pergunta` INT NOT NULL,
