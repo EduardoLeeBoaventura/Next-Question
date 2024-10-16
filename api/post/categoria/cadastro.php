@@ -1,15 +1,15 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
-  use System\Controller\Tipos;
+  use System\Controller\Categoria;
 
   if(!empty($_POST)){
-    $pergunta = new Tipos();
+    $categoria = new Categoria();
 
     $data = [
         "nome"   => $_POST['nome']
     ];
-    $response = $tipos->criar($data);
+    $response = $categoria->criar($data);
     var_dump($response);
     if($response !== false){
         $_SESSION['status_msg'] = "Ação concluida com sucesso";

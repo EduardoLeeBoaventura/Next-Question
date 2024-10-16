@@ -4,16 +4,16 @@ namespace System\Controller;
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
-use System\Model\Tipos as ModelTipos;
+use System\Model\Categorias as ModelCategoria;
 use Handlers\SQL_CRUD;
 
-class Tipos
+class Categoria
 {
   private $model = null;
 
   public function __construct()
   {
-    $this->model = new ModelTipos(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $this->model = new ModelCategoria(DB_HOST, DB_USER, DB_PASS, DB_NAME);
   }
 
   public function criar($data)
@@ -44,6 +44,7 @@ class Tipos
       "id",
       "ref",
       "nome",
+      "descricao",
       "status",
       "visibilidade"
     ];

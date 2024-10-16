@@ -1,9 +1,9 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
-  use System\Controller\Tipos;
+  use System\Controller\categorias;
 
-  $tipos_handler = new Tipos();
+  $tipos_handler = new categorias();
   
   if(!empty($_GET)){
     $ref = @$_GET['ref'];

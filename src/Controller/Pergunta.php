@@ -8,7 +8,7 @@ require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handle
 use System\Model\Perguntas as ModelPerguntas;
 use Handlers\SQL_CRUD;
 
-use System\Controller\Tipos;
+use System\Controller\Categoria;
 use System\Controller\PerguntasConnTipos;
 
 class Pergunta
