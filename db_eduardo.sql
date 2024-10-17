@@ -94,18 +94,28 @@ CREATE TABLE `categorias` (
     `nome` VARCHAR(50) NOT NULL UNIQUE,
     `descricao` TEXT,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
-    `visibilidade` tinyint(1) DEFAULT '1'
+    `visibilidade` tinyint(1) DEFAULT '1',
+    `usuario_cadastro` int DEFAULT NULL,
+    `usuario_edicao` int DEFAULT NULL,
+    `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	  FOREIGN KEY (`usuario_cadastro`) REFERENCES `usuarios`(`id`),
+	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`)
 );
 
 CREATE TABLE `questionario` (
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `nome` VARCHAR(100) NOT NULL,
-    `autor` INT NOT NULL,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
     `descricao` TEXT,
     `visibilidade` tinyint(1) DEFAULT '1',
-	FOREIGN KEY (`autor`) REFERENCES `usuarios`(`id`)
+    `usuario_cadastro` int DEFAULT NULL,
+    `usuario_edicao` int DEFAULT NULL,
+    `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	  FOREIGN KEY (`usuario_cadastro`) REFERENCES `usuarios`(`id`),
+	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`)
 );
 CREATE TABLE `perguntas` (
 	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -113,7 +123,13 @@ CREATE TABLE `perguntas` (
     `pergunta` TEXT NOT NULL,
     `opcoes` TEXT COMMENT 'As opções devem estar padronizadas',
     `coption` VARCHAR(1),
-    `visibilidade` tinyint(1) DEFAULT '1'
+    `visibilidade` tinyint(1) DEFAULT '1',
+    `usuario_cadastro` int DEFAULT NULL,
+    `usuario_edicao` int DEFAULT NULL,
+    `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	  FOREIGN KEY (`usuario_cadastro`) REFERENCES `usuarios`(`id`),
+	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`)
 );
 CREATE TABLE `categorias_conn_perguntas` (
 	  `id_categoria` INT NOT NULL,
