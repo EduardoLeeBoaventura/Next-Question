@@ -13,7 +13,6 @@
 
     if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'U')){
       array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "edicao.php"));
-      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "vinculo_privilegios.php"));
     }
     
     define("PAINEL_CONTENT", $includes);
