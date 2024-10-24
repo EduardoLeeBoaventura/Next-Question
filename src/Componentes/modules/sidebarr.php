@@ -53,8 +53,8 @@ if(haveAccessToPage("Questões")){
   ?>
   
     <!-- QUESTÕES -->
-    <li class="nav-item <?= @$GLOBALS['item-sidebar'] == "questoes" ? "active" : "" ?>" title="Questões">
-      <a href="/gerenciamento/cadastros/questoes/" class="nav-link text-white d-flex align-items-center" style="gap: 10px;">
+    <li class="nav-item <?= @$GLOBALS['item-sidebar'] == "perguntas" ? "active" : "" ?>" title="Questões">
+      <a href="/gerenciamento/cadastros/perguntas/" class="nav-link text-white d-flex align-items-center" style="gap: 10px;">
         <span class="material-symbols-outlined">forms_add_on</span>
         <span class="text">Questões</span>
       </a>

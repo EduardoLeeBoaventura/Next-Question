@@ -62,7 +62,7 @@
     ]
   }, 
 
-  "/gerenciamento/cadastros/questoes/": {
+  "/gerenciamento/cadastros/perguntas/": {
     "title": "Cadastro de  Questões",
     "privilege": "C|R+|U+|D+",
     "requirements": ["auth", "privilege"],
@@ -71,9 +71,9 @@
       "privilege": "/"
     },
     "related": [
-      "/gerenciamento/cadastros/questoes/cadastro.php",
-      "/gerenciamento/cadastros/questoes/listagem.php",
-      "/gerenciamento/cadastros/questoes/edicao.php"
+      "/gerenciamento/cadastros/perguntas/cadastro.php",
+      "/gerenciamento/cadastros/perguntas/listagem.php",
+      "/gerenciamento/cadastros/perguntas/edicao.php"
     ]
   },
   
