@@ -5,9 +5,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
 require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
 use System\Model\Categorias as ModelCategoria;
-use Handlers\SQL_CRUD;
 
-class Categoria
+class Categorias
 {
   private $model = null;
 
@@ -44,13 +43,15 @@ class Categoria
       "id",
       "ref",
       "nome",
-      "descricao",
+      "descricao", 
+      "id_superior",
       "status",
       "visibilidade"
     ];
 
     $tipos = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);
-    $response = $tipos->result;
+    $response = $tipos->result; 
+    return  $response;
 }
 public function returnsIdByRef($ref)
   {

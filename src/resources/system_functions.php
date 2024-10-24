@@ -119,8 +119,7 @@ function arrayLength($array){
 
 // ROUTES CONTROL
 
-function checkRoute()
-{
+function checkRoute(){
   $path = normalizePath($_SERVER['SCRIPT_NAME']);
   $routes = readRoutesJson();
 
@@ -152,8 +151,7 @@ function normalizePath($path){
   return $path;
 }
 
-function removeIndex($path)
-{
+function removeIndex($path){
   if(mb_strpos($path, '/index.php') !== false){
     $path = mb_substr($path, 0, mb_strpos($path, '/index.php'));
     

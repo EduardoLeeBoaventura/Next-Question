@@ -18,13 +18,13 @@
         $response = [
             "response" => $tipos,
             "status" => true,
-            "status_msg" => "Tipo(s) encontrados."
+            "status_msg" => "Categoria(s) encontradas."
         ];
     } else {
         $response = [
             "response" => [],
             "status" => false,
-            "status_msg" => "Nenhuma Tipo(s) encontrado."
+            "status_msg" => "Nenhuma categoria(s) encontrada."
         ];
     }
   } else {

@@ -89,10 +89,11 @@ CREATE TABLE `usuarios_conn_niveis` (
 
 
 CREATE TABLE `categorias` (
-	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `nome` VARCHAR(50) NOT NULL UNIQUE,
     `descricao` TEXT,
+    `id_superior` INT DEFAULT NULL COMMENT 'id da categoria superior',
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
     `visibilidade` tinyint(1) DEFAULT '1',
     `usuario_cadastro` int DEFAULT NULL,
@@ -104,7 +105,7 @@ CREATE TABLE `categorias` (
 );
 
 CREATE TABLE `questionario` (
-	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `nome` VARCHAR(100) NOT NULL,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
@@ -118,7 +119,7 @@ CREATE TABLE `questionario` (
 	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`)
 );
 CREATE TABLE `perguntas` (
-	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `pergunta` TEXT NOT NULL,
     `opcoes` TEXT COMMENT 'As opções devem estar padronizadas',
@@ -132,21 +133,21 @@ CREATE TABLE `perguntas` (
 	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`)
 );
 CREATE TABLE `categorias_conn_perguntas` (
-	  `id_categoria` INT NOT NULL,
+	`id_categoria` INT NOT NULL,
     `id_pergunta` INT NOT NULL,
     FOREIGN KEY (`id_categoria`) REFERENCES `categorias`(`id`),
     FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`)
 );
 
 CREATE TABLE `categorias_conn_questionario` (
-	  `id_categoria` INT NOT NULL,
+	`id_categoria` INT NOT NULL,
     `id_questionario` INT NOT NULL,
     FOREIGN KEY (`id_categoria`) REFERENCES `categorias`(`id`),
     FOREIGN KEY (`id_questionario`) REFERENCES `questionario`(`id`)
 );
 
 CREATE TABLE `questionario_conn_perguntas` (
-	  `id_questionario` INT NOT NULL,
+	`id_questionario` INT NOT NULL,
     `id_pergunta` INT NOT NULL,
     FOREIGN KEY (`id_questionario`) REFERENCES `questionario`(`id`),
     FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`)

@@ -45,6 +45,36 @@
       "/gerenciamento/cadastros/usuarios/alterar_senha.php",
       "/gerenciamento/cadastros/usuarios/vinculo_niveis.php"
     ]
+  }, 
+
+  "/gerenciamento/cadastros/categorias/": {
+    "title": "Cadastro de Categorias",
+    "privilege": "C|R+|U+|D+",
+    "requirements": ["auth", "privilege"],
+    "alternative": {
+      "auth": "/login.php",
+      "privilege": "/"
+    },
+    "related": [
+      "/gerenciamento/cadastros/categorias/cadastro.php",
+      "/gerenciamento/cadastros/categorias/listagem.php",
+      "/gerenciamento/cadastros/categorias/edicao.php"
+    ]
+  }, 
+
+  "/gerenciamento/cadastros/questoes/": {
+    "title": "Cadastro de  Questões",
+    "privilege": "C|R+|U+|D+",
+    "requirements": ["auth", "privilege"],
+    "alternative": {
+      "auth": "/login.php",
+      "privilege": "/"
+    },
+    "related": [
+      "/gerenciamento/cadastros/questoes/cadastro.php",
+      "/gerenciamento/cadastros/questoes/listagem.php",
+      "/gerenciamento/cadastros/questoes/edicao.php"
+    ]
   },
   
   "/gerenciamento/cadastros/niveis_acessos/": {
@@ -104,6 +134,11 @@
     "alternative": {},
     "related": []
   },
+  "/api/get/categorias/consulta_categorias.php": {
+  "requirements": ["auth", "get"],
+  "alternative": {},
+  "related": []
+},
   "/api/get/usuarios/excluir_vinculo_privilegios.php": {
     "requirements": ["auth", "get"],
     "alternative": {},
@@ -178,5 +213,17 @@
     "requirements": [],
     "alternative": {},
     "related": []
+  },
+
+  "/api/post/categorias/cadastro.php": {
+    "requirements": ["post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/categorias/edicao.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
   }
+
 }

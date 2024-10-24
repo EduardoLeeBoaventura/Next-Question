@@ -35,6 +35,33 @@
             <!-- NÍVEIS DE ACESSOS \. -->
           <?php
         }
+        if(haveAccessToPage("Categorias")){
+          ?>
+          
+            <!-- CATEGORIAS -->
+            <li class="nav-item <?= @$GLOBALS['item-sidebar'] == "categoria" ? "active" : "" ?>" title="Categorias">
+              <a href="/gerenciamento/cadastros/categorias/" class="nav-link text-white d-flex align-items-center" style="gap: 10px;">
+                <span class="material-symbols-outlined">category</span>
+                <span class="text">Categorias</span>
+              </a>
+            </li>
+            <!-- CATEGORIAS \. -->
+          <?php 
+        } 
+
+if(haveAccessToPage("Questões")){
+  ?>
+  
+    <!-- QUESTÕES -->
+    <li class="nav-item <?= @$GLOBALS['item-sidebar'] == "questoes" ? "active" : "" ?>" title="Questões">
+      <a href="/gerenciamento/cadastros/questoes/" class="nav-link text-white d-flex align-items-center" style="gap: 10px;">
+        <span class="material-symbols-outlined">forms_add_on</span>
+        <span class="text">Questões</span>
+      </a>
+    </li>
+    <!-- QUESTÔES \. -->
+  <?php
+        }
         
         if(haveAccessToPage("Painel de Emissões")){
           ?>
@@ -49,7 +76,7 @@
           <?php
         }
       ?>
-      
+       
 
     </ul>
   </div>
