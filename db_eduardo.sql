@@ -93,7 +93,6 @@ CREATE TABLE `categorias` (
     `ref` varchar(25) NOT NULL,
     `nome` VARCHAR(50) NOT NULL UNIQUE,
     `descricao` TEXT,
-    `id_superior` INT DEFAULT NULL COMMENT 'id da categoria superior',
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
     `visibilidade` tinyint(1) DEFAULT '1',
     `usuario_cadastro` int DEFAULT NULL,
@@ -105,11 +104,12 @@ CREATE TABLE `categorias` (
 );
 
 CREATE TABLE `questionario` (
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `nome` VARCHAR(100) NOT NULL,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
     `descricao` TEXT,
+    `quantidade_questoes` int,
     `visibilidade` tinyint(1) DEFAULT '1',
     `usuario_cadastro` int DEFAULT NULL,
     `usuario_edicao` int DEFAULT NULL,
@@ -140,17 +140,16 @@ CREATE TABLE `categorias_conn_perguntas` (
 );
 
 CREATE TABLE `categorias_conn_questionario` (
-	`id_categoria` INT NOT NULL,
+	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	  `id_categoria` INT NOT NULL,
     `id_questionario` INT NOT NULL,
     FOREIGN KEY (`id_categoria`) REFERENCES `categorias`(`id`),
     FOREIGN KEY (`id_questionario`) REFERENCES `questionario`(`id`)
 );
 
 CREATE TABLE `questionario_conn_perguntas` (
-	`id_questionario` INT NOT NULL,
-    `id_pergunta` INT NOT NULL,
-    FOREIGN KEY (`id_questionario`) REFERENCES `questionario`(`id`),
-    FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`)
+	`id_vinculo` INT NOT NULL,
+    FOREIGN KEY (`id_vinculo`) REFERENCES `categorias_conn_questionario`(`id`)
 );
 
 
@@ -166,3 +165,9 @@ CREATE TABLE `logs` (
   `data_cadastro` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
+
+
+INSERT INTO `usuarios` (ref, nome, email, senha, telefone, cpf, geral, desenvolvedor, situacao) VALUES ('YA8EJ-TSYB-XESEG-BN76NQT4','Jonta Sancar','email@email.com', '$2y$10$pqOsZHlxPFtFA/xLbdYRee7eje8etw7aTO958ff.JRcjfOvBXjpk6','(00) 0 0000-0000','000.000.000-00',1,1,'ATIVO');
+
+# email : email@email.com
+# senha : senha
