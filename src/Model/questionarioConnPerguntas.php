@@ -20,7 +20,7 @@
             $tables = [
                 "perguntas P" => [],
                 "questionario_conn_pergunta QCP" => ["QCP.id_pergunta = P.id"],
-                "questionario Q" => [["Q.id", "QCP.id_questionario"]],
+                "vinculo_questionario VQ" => [["VQ.id", "QCP.id_vinculo"]],
             ];
 
             $response = parent::execSelect($tables, $columns, $conditions, $group_by, $order_by, $order_direction, $limit_min, $limit_max);

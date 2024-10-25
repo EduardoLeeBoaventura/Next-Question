@@ -123,7 +123,7 @@ CREATE TABLE `perguntas` (
     `ref` varchar(25) NOT NULL,
     `pergunta` TEXT NOT NULL,
     `opcoes` TEXT COMMENT 'As opções devem estar padronizadas',
-    `coption` VARCHAR(1),
+    `gabarito` VARCHAR(1),
     `visibilidade` tinyint(1) DEFAULT '1',
     `usuario_cadastro` int DEFAULT NULL,
     `usuario_edicao` int DEFAULT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE `categorias_conn_perguntas` (
     FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`)
 );
 
-CREATE TABLE `categorias_conn_questionario` (
+CREATE TABLE `vinculo_questionario` (
 	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	  `id_categoria` INT NOT NULL,
     `id_questionario` INT NOT NULL,
@@ -149,7 +149,9 @@ CREATE TABLE `categorias_conn_questionario` (
 
 CREATE TABLE `questionario_conn_perguntas` (
 	`id_vinculo` INT NOT NULL,
-    FOREIGN KEY (`id_vinculo`) REFERENCES `categorias_conn_questionario`(`id`)
+	`id_pergunta` INT NOT NULL,
+  FOREIGN KEY (`id_vinculo`) REFERENCES `vinculo_questionario`(`id`)
+  FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`)
 );
 
 
