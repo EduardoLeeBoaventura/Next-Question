@@ -63,7 +63,7 @@
   }, 
 
   "/gerenciamento/cadastros/perguntas/": {
-    "title": "Cadastro de  Questões",
+    "title": "Cadastro de Perguntas",
     "privilege": "C|R+|U+|D+",
     "requirements": ["auth", "privilege"],
     "alternative": {

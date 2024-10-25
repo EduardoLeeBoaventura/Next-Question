@@ -1,5 +1,5 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 ?>
 <div class="modal fade" id="modal-add" tabindex="-1" aria-labelledby="modal-add-usuariosLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -25,13 +25,13 @@
             <select name="categoria_superior" id="categoria_superior-add" class="select-select form-control" onchange="searchAcoesPrivilegio(this.value)">
               <option class="fixed" value="0">Selecione</option>
               <?php
-                $lista_categorias = $categorias_handler->listar(); 
+              $lista_categorias = $categorias_handler->listar();
 
-                foreach( $lista_categorias as $info_categoria){ 
-                  ?> 
-                    <option value="<?=$info_categoria['ref'] ?>"> <?= $info_categoria['nome']?></option>
-                  <?php
-                }
+              foreach ($lista_categorias as $info_categoria) {
+              ?>
+                <option value="<?= $info_categoria['ref'] ?>"> <?= $info_categoria['nome'] ?></option>
+              <?php
+              }
               ?>
             </select>
           </div>
