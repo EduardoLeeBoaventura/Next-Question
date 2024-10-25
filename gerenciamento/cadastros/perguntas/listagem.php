@@ -1,24 +1,19 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
-  $listagem_niveis_acessos = $niveis_acessos_handler->listar();
+  $listagem_perguntas = $perguntas_handler->listar();
 ?>
 <div class="form-search bg-secondary rounded p-3 text-light">
   <form method="get">
     <div class="row">
       <div class="col">
-        <label for="nome">Nome</label>
+        <label for="nome">Pergunta</label>
         <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome do usuário" value="<?= @$_GET['nome'] ?>">
       </div>
 
       <div class="col">
-        <label for="email">Email</label>
+        <label for="email">Opções</label>
         <input type="text" class="form-control" name="email" id="email" placeholder="Email do usuário" value="<?= @$_GET['email'] ?>">
-      </div>
-      
-      <div class="col">
-        <label for="cpf">CPF</label>
-        <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF do usuário" value="<?= @$_GET['cpf'] ?>">
       </div>
     </div>
     <div class="row">
