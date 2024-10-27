@@ -18,11 +18,11 @@
     define("PAINEL_CONTENT", $includes);
   // definições para importação dos módulos da página
 
-  use System\Controller\NiveisAcessos;
+  use System\Controller\Perguntas;
   
-  $niveis_acessos_handler = new NiveisAcessos();
+  $niveis_acessos_handler = new Perguntas();
   
-  $GLOBALS['item-sidebar'] = "niveis_acessos";
+  $GLOBALS['item-sidebar'] = "Perguntas";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -30,7 +30,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SYSTEM - Privilégios</title>
+  <title>SYSTEM - Perguntas</title>
 
   <?php include_once returnsPathFromHost("src", "Componentes", "head-imports.php"); ?>
 </head>

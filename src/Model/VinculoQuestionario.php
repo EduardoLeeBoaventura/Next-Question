@@ -6,8 +6,8 @@
 
     use Handlers\SQL_CRUD;
 
-    class CategoriasConnQuestionario extends SQL_CRUD{
-        private $table = "categorias_conn_questionario";
+    class VinculoQuestionario extends SQL_CRUD{
+        private $table = "vinculo_questionario";
 
         public function insert(Array $data) : Object{
             $response = parent::execInsert($this->table, $data);
@@ -15,12 +15,12 @@
             return $response;
         }
       
-        public function select(String|Array|Null $columns = "CCQ.*", Array|Null $conditions = null, Array|String|Null $group_by = null, Array|String|Null $order_by = null, String|Null $order_direction = "<", String|Int|Null $limit_min = 100, String|Int|Null $limit_max = null) : Object{
+        public function select(String|Array|Null $columns = "VQ.*", Array|Null $conditions = null, Array|String|Null $group_by = null, Array|String|Null $order_by = null, String|Null $order_direction = "<", String|Int|Null $limit_min = 100, String|Int|Null $limit_max = null) : Object{
 
             $tables = [
                 "questionario Q" => [],
-                "categorias_conn_questionario CCQ" => ["CCQ.id_questionario = Q.id"],
-                "categorias C" => [["C.id", "CCQ.id_categoria"]],
+                "vinculo_questionario VQ" => ["VQ.id_questionario = Q.id"],
+                "categorias C" => [["C.id", "VQ.id_categoria"]],
             ];
 
             $response = parent::execSelect($tables, $columns, $conditions, $group_by, $order_by, $order_direction, $limit_min, $limit_max);
