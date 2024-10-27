@@ -7,7 +7,7 @@
   <form method="get">
     <div class="row">
       <div class="col">
-        <label for="nome">Pergunta</label>
+        <label for="nome">Perguntas</label>
         <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome do usuário" value="<?= @$_GET['nome'] ?>">
       </div>
 
@@ -19,7 +19,7 @@
     <div class="row">
 
       <div class="col">
-        <label for="tipo">Tipo de usuário</label>
+        <label for="tipo">Tipo de Perguntas</label>
         <select class="select-select form-control" name="tipo" id="tipo">
           <option class="fixed" value="">Todos</option>
           <option class="fixed" value="">Adminstrador</option>

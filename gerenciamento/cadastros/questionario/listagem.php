@@ -1,13 +1,13 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
-$listagem_categorias = $categorias_handler->listar();
+$listagem_questionario = $questionario_handler->listar();
 ?>
 <div class="form-search bg-secondary rounded p-3 text-light">
   <form method="get">
     <div class="row">
       <div class="col">
-        <label for="nome">Nome</label>
+        <label for="nome">Questionario</label>
         <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome do usuário" value="<?= @$_GET['nome'] ?>">
       </div>
 

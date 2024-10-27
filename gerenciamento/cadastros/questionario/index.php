@@ -4,15 +4,15 @@
   // definições para importação dos módulos da página
     $includes = [];
     if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'C')){
-      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "cadastro.php"));
+      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "questionario", "cadastro.php"));
     }
 
     if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'R')){
-      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "listagem.php"));
+      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "questionario", "listagem.php"));
     }
 
     if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'U')){
-      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "edicao.php"));
+      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "questionario", "edicao.php"));
     }
     
     define("PAINEL_CONTENT", $includes);
