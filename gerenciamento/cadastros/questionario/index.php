@@ -4,25 +4,25 @@
   // definições para importação dos módulos da página
     $includes = [];
     if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'C')){
-      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "cadastro.php"));
+      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "questionario", "cadastro.php"));
     }
 
     if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'R')){
-      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "listagem.php"));
+      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "questionario", "listagem.php"));
     }
 
     if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'U')){
-      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "edicao.php"));
+      array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "questionario", "edicao.php"));
     }
     
     define("PAINEL_CONTENT", $includes);
   // definições para importação dos módulos da página
 
-  use System\Controller\Perguntas;
+  use System\Controller\NiveisAcessos;
   
-  $niveis_acessos_handler = new Perguntas();
+  $niveis_acessos_handler = new NiveisAcessos();
   
-  $GLOBALS['item-sidebar'] = "Perguntas";
+  $GLOBALS['item-sidebar'] = "niveis_acessos";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -30,7 +30,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SYSTEM - Perguntas</title>
+  <title>SYSTEM - Privilégios</title>
 
   <?php include_once returnsPathFromHost("src", "Componentes", "head-imports.php"); ?>
 </head>

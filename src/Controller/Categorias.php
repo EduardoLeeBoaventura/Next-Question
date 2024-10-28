@@ -61,7 +61,7 @@ public function returnsIdByRef($ref)
     ];
 
     $response = $this->model->select('id', $where);
-
+    
     return $response->result != false ? $response->result[0]['id'] : false;
   }
 }

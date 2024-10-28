@@ -4,19 +4,33 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
   use System\Controller\Categorias;
 
   if(!empty($_POST)){
-    $categoria = new Categorias();
+    $categorias = new Categorias();
 
-    $data = [
+    $dados_insert = [
         "nome" => $_POST['nome'],
         "descricao" => $_POST['descricao'],
-        "id_superior" => $categoria->returnsIdByRef($_POST['categoria_superior'])
+        "id_superior" => $categorias->returnsIdByRef($_POST['categoria_superior'])
     ];
-    $response = $categoria->criar($data);
-    var_dump($response);
-    if($response !== false){
-        $_SESSION['status_msg'] = "Ação concluida com sucesso";
+
+  $insert = $categorias->criar($dados_insert);
+
+  if($insert->result !== false){
+    $categorias = $categorias->listar([['U.email', $_POST['email']]])->result[0]['ref'];
+
+    $_SESSION["form_action_status"] = $categorias;
+    if(!empty($_SESSION['id_categorias'])){
+      $_SESSION["form_action_status"] = true;
     }
-  } else{
-        $_SESSION['status_msg'] = "Dados inválidos ou insuficientes";
+    $_SESSION["status_msg"] = "Cadastro realizado com sucesso";
+  }else if($insert->result == false && !empty($insert->result_error)){
+    $query_param = "";
+
+    $_SESSION["form_action_status"] = false;
+    $_SESSION["status_msg"] = "Ação não realizada, erro: " .$insert->ref_log;
   }
-  header('Location: /gerenciamento/cadastros/categorias');
+} else {
+    $_SESSION["form_action_status"] = false;
+    $_SESSION["status_msg"] = "Dados para cadastro não informados";
+}
+
+header('Location: /gerenciamento/cadastros/categorias');

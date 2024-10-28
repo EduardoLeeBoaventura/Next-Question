@@ -6,10 +6,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
 require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
 use System\Model\CategoriasConnPerguntas as ModelPerguntasConnCategorias;
-use System\Controller\Categoria;
-use System\Controller\Pergunta;
+use System\Controller\Categorias;
+use System\Controller\Perguntas;
 
-class PerguntasConnTipos
+class PerguntasConnCategorias
 {
   private $model = null;
 
@@ -20,11 +20,11 @@ class PerguntasConnTipos
 
   public function criar($perguntas, $categorias)
   {
-    $categoria      = new Categoria();
-    $pergunta  = new Pergunta();
+    $categorias = new Categorias();
+    $perguntas  = new Perguntas();
     $data = [
-      "id_tipo"   => $categoria->returnsIdByRef($categorias),
-      "id_pergunta" => $pergunta->returnsIdByRef($perguntas)
+      "id_tipo"     => $categorias->returnsIdByRef($categorias),
+      "id_pergunta" => $perguntas->returnsIdByRef($perguntas)
     ];
     $response = $this->model->insert($data);
     return $response->result;
@@ -37,11 +37,11 @@ class PerguntasConnTipos
     return $response;
   }
 
-  public function excluir($categoria, $pergunta)
+  public function excluir($categorias, $perguntas)
   {
     $conditions = [
-      " EXISTS(SELECT * FROM tipos TP WHERE TP.id = tipos_conn_perguntas.id_tipo AND TP.ref = '$categoria') ",
-      " EXISTS(SELECT * FROM perguntas P WHERE P.id = tipos_conn_perguntas.id_pergunta AND P.ref = '$pergunta') "
+      " EXISTS(SELECT * FROM tipos TP WHERE TP.id = tipos_conn_perguntas.id_tipo AND TP.ref = '$categorias') ",
+      " EXISTS(SELECT * FROM perguntas P WHERE P.id = tipos_conn_perguntas.id_pergunta AND P.ref = '$perguntas') "
     ];
 
     $response = $this->model->delete($conditions);

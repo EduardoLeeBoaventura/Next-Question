@@ -165,9 +165,6 @@ CREATE TABLE `questionario_conn_perguntas` (
 
 
 
-
-
-
 CREATE TABLE `logs` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ref` varchar(25) NOT NULL,
