@@ -3,7 +3,7 @@
 
   use System\Controller\categorias;
 
-  $tipos_handler = new categorias();
+  $categoria = new categorias();
   
   if(!empty($_GET)){
     $ref = @$_GET['ref'];
@@ -12,11 +12,11 @@
       "ref = '$ref'"
     ];
     
-    $tipos = $tipos_handler->listar($conditions);
+    $categoria = $categoria->listar($conditions);
 
-    if($tipos !== false && arrayLength($tipos) > 0){
+    if($categoria !== false && arrayLength($categoria) > 0){
         $response = [
-            "response" => $tipos,
+            "response" => $categoria,
             "status" => true,
             "status_msg" => "Categoria(s) encontradas."
         ];

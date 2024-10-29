@@ -6,10 +6,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
 require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
 use System\Model\CategoriasConnPerguntas as ModelPerguntasConnCategorias;
-use System\Controller\Categoria;
+use System\Controller\Categorias;
 use System\Controller\Pergunta;
 
-class PerguntasConnTipos
+class PerguntasConnCategorias
 {
   private $model = null;
 
@@ -20,10 +20,10 @@ class PerguntasConnTipos
 
   public function criar($perguntas, $categorias)
   {
-    $categoria      = new Categoria();
+    $categoria = new Categorias();
     $pergunta  = new Pergunta();
     $data = [
-      "id_tipo"   => $categoria->returnsIdByRef($categorias),
+      "id_categoria"   => $categoria->returnsIdByRef($categorias),
       "id_pergunta" => $pergunta->returnsIdByRef($perguntas)
     ];
     $response = $this->model->insert($data);
@@ -40,7 +40,7 @@ class PerguntasConnTipos
   public function excluir($categoria, $pergunta)
   {
     $conditions = [
-      " EXISTS(SELECT * FROM tipos TP WHERE TP.id = tipos_conn_perguntas.id_tipo AND TP.ref = '$categoria') ",
+      " EXISTS(SELECT * FROM categorias C WHERE C.id = categorias_conn_perguntas.id_tipo AND C.ref = '$categoria') ",
       " EXISTS(SELECT * FROM perguntas P WHERE P.id = tipos_conn_perguntas.id_pergunta AND P.ref = '$pergunta') "
     ];
 
@@ -53,12 +53,14 @@ class PerguntasConnTipos
     return $response->result;
   }
 
-  public function listar($limit_min = 100, $limit_max = null)
+  public function listar($columns = null, $limit_min = 100, $limit_max = null)
   {
-    $columns = [
-      "T.nome",
-      "P.pergunta"
-    ];    
+    if(empty($columns)) {
+      $columns = [
+        "T.nome",
+        "P.pergunta"
+      ];
+    }
 
     $response = $this->model->select($columns, null, null, null, null, $limit_min, $limit_max);
 
