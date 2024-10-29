@@ -1,7 +1,7 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
-  $listagem_categorias = $categorias_handler->listar();
+$listagem_categorias = $categorias_handler->listar();
 ?>
 <div class="form-search bg-secondary rounded p-3 text-light">
   <form method="get">
@@ -15,7 +15,7 @@
         <label for="email">Email</label>
         <input type="text" class="form-control" name="email" id="email" placeholder="Email do usuário" value="<?= @$_GET['email'] ?>">
       </div>
-      
+
       <div class="col">
         <label for="cpf">CPF</label>
         <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF do usuário" value="<?= @$_GET['cpf'] ?>">
@@ -42,7 +42,7 @@
           <option class="fixed" value="">Ver</option>
         </select>
       </div>
-      
+
       <div class="col">
         <label for="situacao">Situação da categoria</label>
         <select class="select-select form-control" name="situacao" id="situacao">
@@ -65,14 +65,14 @@
 
 <div class="row">
   <?php
-    if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'C')){
-      ?>
-        <button type="button" class="col-sm-2 btn btn-default text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-add">
-            <span class="material-symbols-outlined">add</span>
-            Novo Nível
-        </button>
-      <?php
-    }
+  if (havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'C')) {
+  ?>
+    <button type="button" class="col-sm-2 btn btn-default text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-add">
+      <span class="material-symbols-outlined">add</span>
+      Novo Nível
+    </button>
+  <?php
+  }
   ?>
 </div>
 
@@ -86,7 +86,24 @@
       <th>Ações</th>
     </tr>
   </thead>
-  +
+
+  <tbody>
+
+    <?php
+
+
+    foreach ($lista_categorias as $info_categoria) {
+    ?>
+      <tr>
+
+        <td>Nome</td> 
+        <td>Descrição</td> 
+      </tr>
+    <?php
+    }
+    ?>
+
+  </tbody>
 </table>
 
 <small>
@@ -95,7 +112,7 @@
 </small>
 
 <script>
-  function setValues(ref, nome, situacao){
+  function setValues(ref, nome, situacao) {
     const data = {
       "ref_registro": ref,
       "nome-edit": nome,
@@ -105,7 +122,7 @@
     sendValuesToEditForm(data);
   }
 
-  async function searchAcoesPrivilegio(privilegio){
+  async function searchAcoesPrivilegio(privilegio) {
     const data = {
       privilegio
     }
@@ -120,13 +137,13 @@
 
     const form_group = document.querySelector("#acoes-privilegios");
     form_group.innerHTML = "";
-    if(json.status){
+    if (json.status) {
       const response = json.response;
 
-      response.forEach(v=>{
+      response.forEach(v => {
         let val = returnsAction(v);
         let normal = "";
-        if(v.indexOf('+') != -1){
+        if (v.indexOf('+') != -1) {
           normal_val = returnsAction(v.replace('+', ''));
           normal = `
             <label for="${normal_val}-add" style="margin-right: 10px;">
@@ -149,45 +166,45 @@
     }
   }
 
-  function returnsAction(v){
+  function returnsAction(v) {
     let val = '';
-    switch(v){
-          case 'C':
-            val = 'Cadastrar';
-            break;
-          case 'C+':
-            val = 'Cadastrar +';
-            break;
-          case 'R':
-            val = 'Ler';
-            break;
-          case 'R+':
-            val = 'Ler +';
-            break;
-          case 'U':
-            val = 'Editar';
-            break;
-          case 'U+':
-            val = 'Editar +';
-            break;
-          case 'D':
-            val = 'Excluir';
-            break;
-          case 'D+':
-            val = 'Excluir +';
-            break;
-          case 'E':
-            val = 'Emitir';
-            break;
-          case 'E+':
-            val = 'Emitir +';
-            break;
-        }
+    switch (v) {
+      case 'C':
+        val = 'Cadastrar';
+        break;
+      case 'C+':
+        val = 'Cadastrar +';
+        break;
+      case 'R':
+        val = 'Ler';
+        break;
+      case 'R+':
+        val = 'Ler +';
+        break;
+      case 'U':
+        val = 'Editar';
+        break;
+      case 'U+':
+        val = 'Editar +';
+        break;
+      case 'D':
+        val = 'Excluir';
+        break;
+      case 'D+':
+        val = 'Excluir +';
+        break;
+      case 'E':
+        val = 'Emitir';
+        break;
+      case 'E+':
+        val = 'Emitir +';
+        break;
+    }
 
-        return val;
+    return val;
   }
 
-  async function setValuesToJoinPrivilegios(nivel){
+  async function setValuesToJoinPrivilegios(nivel) {
     const data = {
       "ref_nivel-vinculo-privilegios": nivel
     }
@@ -206,10 +223,10 @@
 
     const table = document.querySelector("#table-vinculos-niveis-privilegios");
     table.innerHTML = "";
-    if(json.status){
+    if (json.status) {
       const response = json.response;
 
-      response.forEach(v=>{
+      response.forEach(v => {
         const tr = `
             <tr>
               <td>${v.pagina}</td>
@@ -230,7 +247,7 @@
     sendValuesToEditForm(data);
   }
 
-  async function removeVinculo(privilegio, nivel){
+  async function removeVinculo(privilegio, nivel) {
     const url = "/api/get/niveis_acessos/excluir_vinculo_privilegios.php";
 
     const data_consulta = {
@@ -244,9 +261,9 @@
       }
     };
 
-    if(confirm("Tem certeza que deseja remover este vínculo?")){
+    if (confirm("Tem certeza que deseja remover este vínculo?")) {
       const response = await fetchData(url, data_consulta, options);
-  
+
       setValuesToJoinPrivilegios(nivel);
       location.reload();
     }

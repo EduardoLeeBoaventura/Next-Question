@@ -3,15 +3,12 @@
 namespace System\Controller;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
-require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
 use System\Model\Perguntas as ModelPerguntas;
-use Handlers\SQL_CRUD;
 
-use System\Controller\Categoria;
-use System\Controller\PerguntasConnTipos;
+use System\Controller\PerguntasConnCategorias;
 
-class Pergunta
+class Perguntas
 {
   private $model = null;
 
@@ -54,12 +51,35 @@ class Pergunta
       "visibilidade"
     ];
 
+
+    $conditions_perguntas = [
+      ["visibilidade", 1]
+    ];
+
+    if(!empty($conditions)){
+      array_push($conditions_perguntas, ...$conditions);
+    }
+
     $perguntas = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);
     $response = $perguntas->result;
-    
+
+    $response = false;
+    if($perguntas->result !== false && arrayLength($perguntas->result) > 0){
+      $response = $perguntas->result;
+
+      foreach ($response as $key => $value) {
+        $perguntas_com_categorias = new PerguntasConnCategorias();
+        $conditions = [
+          ["id_perguntas", $value['id']]
+        ];
+        $categorias = $perguntas_com_categorias->listar($conditions);
+  
+        $response[$key]['categorias'] = $categorias;
+      }
+    }
     return $response;
   }
-
+  
   public function returnsIdByRef($ref)
   {
     $where = [

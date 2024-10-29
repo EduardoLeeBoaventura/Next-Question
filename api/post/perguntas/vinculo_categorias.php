@@ -2,14 +2,14 @@
   require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 unset($_SESSION["ref_log"]);
 
-use System\Controller\PerguntasConnTipos;
+use System\Controller\PerguntasConnCategorias;
 
 if (!empty($_POST)){
-    $PerguntasCTipos = new PerguntasConnTipos();
+    $PerguntasCCategorias = new PerguntasConnCategorias();
 
-    $tipo = $_POST['tipo'];
-    $pergunta = $_POST['pergunta'];
-    $response = $PerguntasCTipos->criar($pergunta, $tipo);
+    $categorias = $_POST['categorias'];
+    $perguntas = $_POST['perguntas'];
+    $response = $PerguntasCTipos->criar($perguntas, $categorias);
     // var_dump($response);
     
     if($response !== false){

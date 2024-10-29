@@ -3,7 +3,6 @@
 namespace System\Controller;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
-require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
 use System\Model\UsuariosConnNiveis as ModelUsuariosConnNiveis;
 use System\Controller\NiveisAcessos;

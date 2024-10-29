@@ -1,25 +1,30 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
-  $listagem_perguntas = $perguntas_handler->listar();
+$listagem_questionario = $questionario_handler->listar();
 ?>
 <div class="form-search bg-secondary rounded p-3 text-light">
   <form method="get">
     <div class="row">
       <div class="col">
-        <label for="nome">Perguntas</label>
+        <label for="nome">Questionario</label>
         <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome do usuário" value="<?= @$_GET['nome'] ?>">
       </div>
 
       <div class="col">
-        <label for="email">Opções</label>
+        <label for="email">Email</label>
         <input type="text" class="form-control" name="email" id="email" placeholder="Email do usuário" value="<?= @$_GET['email'] ?>">
+      </div>
+
+      <div class="col">
+        <label for="cpf">CPF</label>
+        <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF do usuário" value="<?= @$_GET['cpf'] ?>">
       </div>
     </div>
     <div class="row">
 
       <div class="col">
-        <label for="tipo">Tipo de Perguntas</label>
+        <label for="tipo">Tipo de usuário</label>
         <select class="select-select form-control" name="tipo" id="tipo">
           <option class="fixed" value="">Todos</option>
           <option class="fixed" value="">Adminstrador</option>
@@ -37,9 +42,9 @@
           <option class="fixed" value="">Ver</option>
         </select>
       </div>
-      
+
       <div class="col">
-        <label for="situacao">Situação do usuário</label>
+        <label for="situacao">Situação da categoria</label>
         <select class="select-select form-control" name="situacao" id="situacao">
           <option class="fixed" value="">Todos</option>
           <option class="fixed" value="">Ativos</option>
@@ -60,14 +65,14 @@
 
 <div class="row">
   <?php
-    if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'C')){
-      ?>
-        <button type="button" class="col-sm-2 btn btn-default text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-add">
-            <span class="material-symbols-outlined">add</span>
-            Novo Nível
-        </button>
-      <?php
-    }
+  if (havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'C')) {
+  ?>
+    <button type="button" class="col-sm-2 btn btn-default text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-add">
+      <span class="material-symbols-outlined">add</span>
+      Novo Nível
+    </button>
+  <?php
+  }
   ?>
 </div>
 
@@ -81,47 +86,23 @@
       <th>Ações</th>
     </tr>
   </thead>
-  <tbody id="listagem-usuarios">
+
+  <tbody>
+
     <?php
-      foreach($listagem_niveis_acessos as $k => $niveis_acessos_info){
-        ?>
-          <tr>
-            <td><?= ++$k ?></td>
-            <td><?= $niveis_acessos_info['nome'] ?></td>
-            <td><?= arrayLength($niveis_acessos_info['privilegios']) ?></td>
-            <td><?= $niveis_acessos_info['situacao'] ?></td>
 
-            <td class="d-flex justify-content-center">
-              <?php
-                if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'U')){
-                  ?>
-                    <button type="button" class="btn btn-default d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-edit" onclick="setValues('<?= $niveis_acessos_info['ref'] ?>','<?= $niveis_acessos_info['nome'] ?>','<?= $niveis_acessos_info['situacao'] ?>')">
-                      <span class="material-symbols-outlined">edit_square</span>
-                    </button>
-                  <?php
-                }
 
-                if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'U')){
-                  ?>
-                    <button type="button" class="btn btn-default d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-vinculo-privilegios" title="Privilégios"  onclick="setValuesToJoinPrivilegios('<?= $niveis_acessos_info['ref'] ?>')">
-                      <span class="material-symbols-outlined">military_tech</span>
-                    </button>
-                  <?php
-                }
-
-                if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'D')){
-                  ?>
-                    <button class="btn btn-default d-flex align-items-center">
-                      <span class="material-symbols-outlined">delete</span>
-                    </button>
-                  <?php
-                }
-              ?>
-            </td>
-          </tr>
-        <?php
-      }
+    foreach ($lista_categorias as $info_categoria) {
     ?>
+      <tr>
+
+        <td>Nome</td> 
+        <td>Descrição</td> 
+      </tr>
+    <?php
+    }
+    ?>
+
   </tbody>
 </table>
 
@@ -131,7 +112,7 @@
 </small>
 
 <script>
-  function setValues(ref, nome, situacao){
+  function setValues(ref, nome, situacao) {
     const data = {
       "ref_registro": ref,
       "nome-edit": nome,
@@ -141,7 +122,7 @@
     sendValuesToEditForm(data);
   }
 
-  async function searchAcoesPrivilegio(privilegio){
+  async function searchAcoesPrivilegio(privilegio) {
     const data = {
       privilegio
     }
@@ -156,13 +137,13 @@
 
     const form_group = document.querySelector("#acoes-privilegios");
     form_group.innerHTML = "";
-    if(json.status){
+    if (json.status) {
       const response = json.response;
 
-      response.forEach(v=>{
+      response.forEach(v => {
         let val = returnsAction(v);
         let normal = "";
-        if(v.indexOf('+') != -1){
+        if (v.indexOf('+') != -1) {
           normal_val = returnsAction(v.replace('+', ''));
           normal = `
             <label for="${normal_val}-add" style="margin-right: 10px;">
@@ -185,45 +166,45 @@
     }
   }
 
-  function returnsAction(v){
+  function returnsAction(v) {
     let val = '';
-    switch(v){
-          case 'C':
-            val = 'Cadastrar';
-            break;
-          case 'C+':
-            val = 'Cadastrar +';
-            break;
-          case 'R':
-            val = 'Ler';
-            break;
-          case 'R+':
-            val = 'Ler +';
-            break;
-          case 'U':
-            val = 'Editar';
-            break;
-          case 'U+':
-            val = 'Editar +';
-            break;
-          case 'D':
-            val = 'Excluir';
-            break;
-          case 'D+':
-            val = 'Excluir +';
-            break;
-          case 'E':
-            val = 'Emitir';
-            break;
-          case 'E+':
-            val = 'Emitir +';
-            break;
-        }
+    switch (v) {
+      case 'C':
+        val = 'Cadastrar';
+        break;
+      case 'C+':
+        val = 'Cadastrar +';
+        break;
+      case 'R':
+        val = 'Ler';
+        break;
+      case 'R+':
+        val = 'Ler +';
+        break;
+      case 'U':
+        val = 'Editar';
+        break;
+      case 'U+':
+        val = 'Editar +';
+        break;
+      case 'D':
+        val = 'Excluir';
+        break;
+      case 'D+':
+        val = 'Excluir +';
+        break;
+      case 'E':
+        val = 'Emitir';
+        break;
+      case 'E+':
+        val = 'Emitir +';
+        break;
+    }
 
-        return val;
+    return val;
   }
 
-  async function setValuesToJoinPrivilegios(nivel){
+  async function setValuesToJoinPrivilegios(nivel) {
     const data = {
       "ref_nivel-vinculo-privilegios": nivel
     }
@@ -242,10 +223,10 @@
 
     const table = document.querySelector("#table-vinculos-niveis-privilegios");
     table.innerHTML = "";
-    if(json.status){
+    if (json.status) {
       const response = json.response;
 
-      response.forEach(v=>{
+      response.forEach(v => {
         const tr = `
             <tr>
               <td>${v.pagina}</td>
@@ -266,7 +247,7 @@
     sendValuesToEditForm(data);
   }
 
-  async function removeVinculo(privilegio, nivel){
+  async function removeVinculo(privilegio, nivel) {
     const url = "/api/get/niveis_acessos/excluir_vinculo_privilegios.php";
 
     const data_consulta = {
@@ -280,9 +261,9 @@
       }
     };
 
-    if(confirm("Tem certeza que deseja remover este vínculo?")){
+    if (confirm("Tem certeza que deseja remover este vínculo?")) {
       const response = await fetchData(url, data_consulta, options);
-  
+
       setValuesToJoinPrivilegios(nivel);
       location.reload();
     }

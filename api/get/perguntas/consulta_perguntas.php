@@ -1,9 +1,9 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
-  use System\Controller\Pergunta;
+  use System\Controller\Perguntas;
 
-  $perguntas_handler = new Pergunta();
+  $perguntas = new Perguntas();
   
   if(!empty($_GET)){
     $ref = @$_GET['ref'];
@@ -12,7 +12,7 @@
       "ref = '$ref'"
     ];
     
-    $perguntas = $perguntas_handler->listar($conditions);
+    $perguntas = $perguntas->listar($conditions);
 
     if($perguntas !== false && arrayLength($perguntas) > 0){
         $response = [

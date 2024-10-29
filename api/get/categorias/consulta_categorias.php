@@ -3,20 +3,20 @@
 
   use System\Controller\categorias;
 
-  $categoria = new categorias();
+  $categorias = new categorias();
   
   if(!empty($_GET)){
-    $ref = @$_GET['ref'];
+    $ref = $_GET['ref'];
 
     $conditions = [
       "ref = '$ref'"
     ];
     
-    $categoria = $categoria->listar($conditions);
+    $categorias = $categorias->listar($conditions);
 
-    if($categoria !== false && arrayLength($categoria) > 0){
+    if($categorias !== false && arrayLength($categorias) > 0){
         $response = [
-            "response" => $categoria,
+            "response" => $categorias,
             "status" => true,
             "status_msg" => "Categoria(s) encontradas."
         ];
