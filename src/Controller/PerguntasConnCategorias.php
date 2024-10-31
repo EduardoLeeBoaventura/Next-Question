@@ -53,12 +53,14 @@ class PerguntasConnCategorias
     return $response->result;
   }
 
-  public function listar($limit_min = 100, $limit_max = null)
+  public function listar($columns = null, $limit_min = 100, $limit_max = null)
   {
-    $columns = [
-      "T.nome",
-      "P.pergunta"
-    ];    
+    if(empty($columns)) {
+      $columns = [
+        "T.nome",
+        "P.pergunta"
+      ];
+    }
 
     $response = $this->model->select($columns, null, null, null, null, $limit_min, $limit_max);
 

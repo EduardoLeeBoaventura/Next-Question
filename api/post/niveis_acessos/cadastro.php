@@ -15,12 +15,7 @@
     $insert = $niveis_acessos_handler->criar($dados_insert);
 
     if($insert->result !== false){
-      $usuario = $niveis_acessos_handler->listar([['U.email', $_POST['email']]])->result[0]['ref'];
-
-      $_SESSION["form_action_status"] = $usuario;
-      if(!empty($_SESSION['id_usuario'])){
-        $_SESSION["form_action_status"] = true;
-      }
+      $_SESSION["form_action_status"] = true;
       $_SESSION["status_msg"] = "Cadastro realizado com sucesso";
     }else if($insert->result == false && !empty($insert->result_error)){
       $query_param = "";

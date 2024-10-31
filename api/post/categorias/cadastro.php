@@ -15,12 +15,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
   $insert = $categorias->criar($dados_insert);
 
   if($insert->result !== false){
-    $categorias = $categorias->listar([['U.email', $_POST['email']]])->result[0]['ref'];
-
-    $_SESSION["form_action_status"] = $categorias;
-    if(!empty($_SESSION['id_categorias'])){
-      $_SESSION["form_action_status"] = true;
-    }
+    $_SESSION["form_action_status"] = true;
     $_SESSION["status_msg"] = "Cadastro realizado com sucesso";
   }else if($insert->result == false && !empty($insert->result_error)){
     $query_param = "";
