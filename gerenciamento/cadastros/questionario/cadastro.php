@@ -15,22 +15,7 @@
             <input type="text" name="nome" id="nome-add" class="form-control border border-dark" required>
           </div>
 
-          <div class="form-group">
-            <label for="telefone-add">Telefone</label>
-            <input type="text" name="telefone" id="telefone-add" class="form-control border border-dark" data-format="(##) # ####-####||(##) ####-####" oninput="mask(this)" required placeholder="(00) 0000-0000 / (00) 9 0000-0000">
-          </div>
-
-          <div class="form-group">
-            <label for="email-add">Email</label>
-            <input type="email" name="email" id="email-add" class="form-control border border-dark" required>
-          </div>
-
-          <div class="form-group">
-            <label for="cpf-add">CPF</label>
-            <input type="text" name="cpf" id="cpf-add" class="form-control border border-dark" data-format="###.###.###-##" oninput="mask(this)" required placeholder="000.000.000-00">
-            <small>A senha, por padrão, corresponde aos 6 primeiros dígitos do CPF.</small>
-          </div>
-
+          
           <?php
             if(USER_INFO['desenvolvedor']){
               ?>

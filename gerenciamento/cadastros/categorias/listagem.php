@@ -81,8 +81,8 @@ $listagem_categorias = $categorias_handler->listar();
     <tr>
       <th>##</th>
       <th>Nome</th>
-      <th>Privilégios Associados</th>
-      <th>Situação</th>
+      <th>Descrição</th>
+      <th>Categoria Superior</th>
       <th>Ações</th>
     </tr>
   </thead>
@@ -92,12 +92,14 @@ $listagem_categorias = $categorias_handler->listar();
     <?php
 
 
-    foreach ($lista_categorias as $info_categoria) {
+    foreach ($lista_categorias as  $k => $info_categoria) {
     ?>
       <tr>
-
-        <td>Nome</td> 
-        <td>Descrição</td> 
+        <td><?= ++$k ?></td>
+        <td><?= $info_categoria['nome'] ?></td>
+        <td><?= $info_categoria['descricao'] ?></td>
+        <td><?= $info_categoria['id_superior'] ?></td>
+        <td class="d-flex justify-content-center"></td>
       </tr>
     <?php
     }
