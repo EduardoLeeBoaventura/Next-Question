@@ -97,7 +97,10 @@ $listagem_categorias = $categorias_handler->listar();
       <tr>
 
         <td>Nome</td> 
-        <td>Descrição</td> 
+        <td>Descrição</td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     <?php
     }
