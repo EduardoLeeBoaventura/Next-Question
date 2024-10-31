@@ -119,11 +119,9 @@ CREATE TABLE `questionario` (
 	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`)
 );
 CREATE TABLE `perguntas` (
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `ref` varchar(25) NOT NULL,
     `pergunta` TEXT NOT NULL,
-    `opcoes` TEXT COMMENT 'As opções devem estar padronizadas',
-    `gabarito` VARCHAR(1),
     `visibilidade` tinyint(1) DEFAULT '1',
     `usuario_cadastro` int DEFAULT NULL,
     `usuario_edicao` int DEFAULT NULL,
@@ -131,6 +129,17 @@ CREATE TABLE `perguntas` (
     `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	  FOREIGN KEY (`usuario_cadastro`) REFERENCES `usuarios`(`id`),
 	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`)
+);
+CREATE TABLE `alternativas` (
+	  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `ref` varchar(25) NOT NULL,
+    `alternativa` TEXT,
+    `numero_alternativa` tinyint(1),
+    `gabarito` tinyint(1),
+    `visibilidade` tinyint(1) DEFAULT '1',
+    `id_pergunta` INT NOT NULL,
+	  FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas`(`id`),
+
 );
 CREATE TABLE `categorias_conn_perguntas` (
 	`id_categoria` INT NOT NULL,
