@@ -24,6 +24,12 @@ class Questionario
       return $response;
     }
 
+    public function listar($limit_min = 0, $limit_max = null)
+    {
+      $response = $this->model->select("*", null, null, null, null, $limit_min, $limit_max);
+      return $response;
+    }
+
     public function iniciar($questionario, $categoria, $qtd_perguntas)
     {
       $perguntas = new PerguntasConnCategorias();
