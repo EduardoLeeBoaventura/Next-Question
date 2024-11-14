@@ -35,7 +35,7 @@
             <!-- NÍVEIS DE ACESSOS \. -->
           <?php
         }
-        if(haveAccessToPage("Categorias")){
+        if(haveAccessToPage("Cadastro de Categorias")){
           ?>
           
             <!-- CATEGORIAS -->
@@ -49,7 +49,7 @@
           <?php 
         } 
 
-if(haveAccessToPage("Questões")){
+if(haveAccessToPage("Cadastro de Perguntas")){
   ?>
   
     <!-- PERGUNTAS -->

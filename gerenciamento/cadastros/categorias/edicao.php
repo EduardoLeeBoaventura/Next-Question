@@ -9,19 +9,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style="border: 1px solid #0005;border-width: 1px 0px 1px 0px;">
-        <form id="form-modal-edit" action="/api/post/categoria/edicao.php" method="post">
+        <form id="form-modal-edit" action="/api/post/categorias/edicao.php" method="post">
           <input type="hidden" name="ref_registro" id="ref_registro">
           <div class="form-group">
             <label for="nome-edit">Nome</label>
             <input type="text" name="nome" id="nome-edit" class="form-control border border-dark">
           </div>
-
           <div class="form-group">
-            <label for="situacao-edit">Situação</label>
-            <select name="situacao" id="situacao-edit" class="select-select form-control">
-                <option class="fixed" value="ATIVO">Ativo</option>
-                <option class="fixed" value="INATIVO">Inativo</option>
-            </select>
+            <label for="descricao-edit">Descrição</label>
+            <textarea type="text" name="descricao" id="descricao-edit" class="form-control border border-dark" required></textarea>
           </div>
         </form>
       </div>

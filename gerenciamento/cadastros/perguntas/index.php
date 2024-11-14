@@ -14,6 +14,8 @@
     if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'U')){
       array_push($includes, returnsPathFromHost("gerenciamento", "cadastros", "perguntas", "edicao.php"));
     }
+
+    
     
     define("PAINEL_CONTENT", $includes);
   // definições para importação dos módulos da página

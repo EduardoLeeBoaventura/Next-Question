@@ -1,12 +1,10 @@
 <?php
-
 namespace System\Controller;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
+require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
 use System\Model\Perguntas as ModelPerguntas;
-
-use System\Controller\PerguntasConnCategorias;
 
 class Perguntas
 {
@@ -45,42 +43,27 @@ class Perguntas
       "id",
       "ref",
       "pergunta",
-      "tipo",
       "opcoes",
-      "coption",
-      "visibilidade"
+      "coption"
     ];
 
-
-    $conditions_perguntas = [
-      ["visibilidade", 1]
+    $where = [
+      ["visibilidade", 1],
     ];
 
-    if(!empty($conditions)){
-      array_push($conditions_perguntas, ...$conditions);
+    if (!empty($conditions)) {
+      array_push($where, ...$conditions);
     }
 
-    $perguntas = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);
-    $response = $perguntas->result;
+     //$response = $this->model->select($columns, $where, null, null, null, $limit_min, $limit_max);
 
-    $response = false;
-    if($perguntas->result !== false && arrayLength($perguntas->result) > 0){
-      $response = $perguntas->result;
+     $perguntas = $this->model->select($columns, $where, null, null, null, $limit_min, $limit_max);
+     $response = $perguntas->result; 
+     return  $response;
+}
 
-      foreach ($response as $key => $value) {
-        $perguntas_com_categorias = new PerguntasConnCategorias();
-        $conditions = [
-          ["id_perguntas", $value['id']]
-        ];
-        $categorias = $perguntas_com_categorias->listar($conditions);
-  
-        $response[$key]['categorias'] = $categorias;
-      }
-    }
-    return $response;
-  }
-  
-  public function returnsIdByRef($ref)
+
+public function returnsIdByRef($ref)
   {
     $where = [
       ["ref", $ref],
@@ -88,7 +71,7 @@ class Perguntas
     ];
 
     $response = $this->model->select('id', $where);
-
+    
     return $response->result != false ? $response->result[0]['id'] : false;
   }
 }

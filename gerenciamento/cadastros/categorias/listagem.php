@@ -8,39 +8,12 @@ $listagem_categorias = $categorias_handler->listar();
     <div class="row">
       <div class="col">
         <label for="nome">Nome</label>
-        <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome do usuário" value="<?= @$_GET['nome'] ?>">
+        <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da Categoria" value="<?= @$_GET['nome'] ?>">
       </div>
 
       <div class="col">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" name="email" id="email" placeholder="Email do usuário" value="<?= @$_GET['email'] ?>">
-      </div>
-
-      <div class="col">
-        <label for="cpf">CPF</label>
-        <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF do usuário" value="<?= @$_GET['cpf'] ?>">
-      </div>
-    </div>
-    <div class="row">
-
-      <div class="col">
-        <label for="tipo">Tipo de usuário</label>
-        <select class="select-select form-control" name="tipo" id="tipo">
-          <option class="fixed" value="">Todos</option>
-          <option class="fixed" value="">Adminstrador</option>
-          <option class="fixed" value="">Funcionario</option>
-          <option class="fixed" value="">Filiado</option>
-        </select>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <label for="nivel">Nível de usuário</label>
-        <select class="select-select form-control" name="nivel" id="nivel">
-          <option class="fixed" value="">Todos</option>
-          <option class="fixed" value="">Editar</option>
-          <option class="fixed" value="">Ver</option>
-        </select>
+        <label for="descricao">Descrição</label>
+        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição da Categoria" value="<?= @$_GET['descricao'] ?>">
       </div>
 
       <div class="col">
@@ -69,11 +42,11 @@ $listagem_categorias = $categorias_handler->listar();
   ?>
     <button type="button" class="col-sm-2 btn btn-default text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-add">
       <span class="material-symbols-outlined">add</span>
-      Novo Nível
+      Nova Categoria
     </button>
   <?php
   }
-  ?>
+?>
 </div>
 
 <table class="table table-secondary table-striped">
@@ -86,174 +59,66 @@ $listagem_categorias = $categorias_handler->listar();
       <th>Ações</th>
     </tr>
   </thead>
-
-  <tbody>
-
+  <tbody id="listagem-categorias">
     <?php
+      foreach($listagem_categorias as $k => $categorias_info){
+        ?>
+          <tr>
+            <td><?= ++$k ?></td>
+            <td><?= $categorias_info['nome'] ?></td>
+            <td><?= $categorias_info['descricao'] ?></td>
+            <td><?= $categorias_info['id_superior'] ?></td>
+            <td class="d-flex justify-content-center">
+              <?php
+                if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'U')){
+                  ?>
+                    <button type="button" class="btn btn-default d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-edit" onclick="setValues('<?= $categorias_info['ref'] ?>','<?= $categorias_info['nome'] ?>','<?= $categorias_info['descricao'] ?>')">
+                      <span class="material-symbols-outlined">edit_square</span>
+                    </button>
+                  <?php
+                }
 
-
-    foreach ($lista_categorias as  $k => $info_categoria) {
+                if(havePrivilegeToDo(@returnsConstData('ROUTE_INFO')['title'], 'D')){
+                  ?>
+                    <button type="button" class="btn btn-default d-flex align-items-center" onclick="removeCategorias('<?= $categorias_info['ref'] ?>')">
+                      <span class="material-symbols-outlined">delete</span> 
+                    </button>
+                  <?php
+                }
+              ?>
+            </td>
+          </tr>
+        <?php
+      }
     ?>
-      <tr>
-        <td><?= ++$k ?></td>
-        <td><?= $info_categoria['nome'] ?></td>
-        <td><?= $info_categoria['descricao'] ?></td>
-        <td><?= $info_categoria['id_superior'] ?></td>
-        <td class="d-flex justify-content-center"></td>
-      </tr>
-    <?php
-    }
-    ?>
-
   </tbody>
 </table>
-
-<small>
-  C = Cadastrar | R = Ler / Ver | U = Editar | D = Excluir | E = Emitir.
-  <br>O '+' é pra indicar que possui alguma ação naquele sentido que é especial (deve ser mais restrita).
-</small>
-
 <script>
-  function setValues(ref, nome, situacao) {
+  function setValues(ref, nome, descricao){
     const data = {
       "ref_registro": ref,
       "nome-edit": nome,
-      "situacao-edit": situacao
+      "descricao-edit": descricao,
     }
 
     sendValuesToEditForm(data);
   }
 
-  async function searchAcoesPrivilegio(privilegio) {
+  function setValuesToAlterPass(ref){
     const data = {
-      privilegio
-    }
-
-    const url = "/api/get/niveis_acessos/consulta_acoes_privilegios.php";
-
-    const options = {
-      method: "get"
-    };
-
-    const json = await fetchData(url, data, options);
-
-    const form_group = document.querySelector("#acoes-privilegios");
-    form_group.innerHTML = "";
-    if (json.status) {
-      const response = json.response;
-
-      response.forEach(v => {
-        let val = returnsAction(v);
-        let normal = "";
-        if (v.indexOf('+') != -1) {
-          normal_val = returnsAction(v.replace('+', ''));
-          normal = `
-            <label for="${normal_val}-add" style="margin-right: 10px;">
-              <input type="checkbox" name="acoes-privilegios[]" multiple value="${v.replace('+', '')}" id="${normal_val}-add">
-              ${normal_val}
-            </label>
-          `;
-        }
-
-        const input = `
-            ${normal}
-            <label for="${val}-add" style="margin-right: 10px;">
-              <input type="checkbox" name="acoes-privilegios[]" multiple value="${v}" id="${val}-add">
-              ${val}
-            </label>
-        `;
-
-        form_group.innerHTML += input;
-      });
-    }
-  }
-
-  function returnsAction(v) {
-    let val = '';
-    switch (v) {
-      case 'C':
-        val = 'Cadastrar';
-        break;
-      case 'C+':
-        val = 'Cadastrar +';
-        break;
-      case 'R':
-        val = 'Ler';
-        break;
-      case 'R+':
-        val = 'Ler +';
-        break;
-      case 'U':
-        val = 'Editar';
-        break;
-      case 'U+':
-        val = 'Editar +';
-        break;
-      case 'D':
-        val = 'Excluir';
-        break;
-      case 'D+':
-        val = 'Excluir +';
-        break;
-      case 'E':
-        val = 'Emitir';
-        break;
-      case 'E+':
-        val = 'Emitir +';
-        break;
-    }
-
-    return val;
-  }
-
-  async function setValuesToJoinPrivilegios(nivel) {
-    const data = {
-      "ref_nivel-vinculo-privilegios": nivel
-    }
-
-    const url = "/api/get/niveis_acessos/consulta_vinculo_privilegios.php";
-
-    const data_consulta = {
-      nivel
-    };
-
-    const options = {
-      method: "get"
-    };
-
-    const json = await fetchData(url, data_consulta, options);
-
-    const table = document.querySelector("#table-vinculos-niveis-privilegios");
-    table.innerHTML = "";
-    if (json.status) {
-      const response = json.response;
-
-      response.forEach(v => {
-        const tr = `
-            <tr>
-              <td>${v.pagina}</td>
-              <td>${v.permissoes}</td>
-              <td>${v.tipo}</td>
-              <td class="d-flex align-items-center justify-content-center">
-                <button class="btn btn-default" onclick="removeVinculo('${v.ref}', '${nivel}')">
-                  <span class="material-symbols-outlined">delete</span>
-                </button>
-              </td>
-            </tr>
-        `;
-
-        table.innerHTML += tr;
-      });
+      "ref_registro_alter_pass": ref
     }
 
     sendValuesToEditForm(data);
   }
 
-  async function removeVinculo(privilegio, nivel) {
-    const url = "/api/get/niveis_acessos/excluir_vinculo_privilegios.php";
+  
+  // onclick="removeCategorias('< ?= $categoria_info['ref'] ?>')"
+  async function removeCategorias(categorias){
+    const url = "/api/get/categorias/excluir_categorias.php";
 
     const data_consulta = {
-      privilegio
+      categorias
     };
 
     const options = {
@@ -263,10 +128,10 @@ $listagem_categorias = $categorias_handler->listar();
       }
     };
 
-    if (confirm("Tem certeza que deseja remover este vínculo?")) {
+    if(confirm("Tem certeza que deseja remover essa categoria?")){
       const response = await fetchData(url, data_consulta, options);
 
-      setValuesToJoinPrivilegios(nivel);
+      //setValuesToJoinPrivilegios(categorias);
       location.reload();
     }
   }

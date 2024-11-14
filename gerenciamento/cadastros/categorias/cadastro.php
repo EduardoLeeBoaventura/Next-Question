@@ -25,13 +25,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
             <select name="categoria_superior" id="categoria_superior-add" class="select-select form-control" onchange="searchAcoesPrivilegio(this.value)">
               <option class="fixed" value="0">Selecione</option>
               <?php
-              $lista_categorias = $categorias_handler->listar();
+              if ( $lista_categorias !== false) {
+                $lista_categorias = $categorias_handler->listar();
 
-              foreach ($lista_categorias as $info_categoria) {
-              ?>
-                <option value="<?= $info_categoria['ref'] ?>"> <?= $info_categoria['nome'] ?></option>
-              <?php
-              }
+                foreach ($lista_categorias as $info_categoria) {
+                  ?>
+                    <option value="<?= $info_categoria['ref'] ?>"> <?= $info_categoria['nome'] ?></option>
+                  <?php
+                }
+              } 
               ?>
             </select>
           </div>
