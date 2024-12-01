@@ -95,12 +95,14 @@ CREATE TABLE `categorias` (
     `descricao` TEXT,
     `status` ENUM('ativo','inativo') DEFAULT 'ativo',
     `visibilidade` tinyint(1) DEFAULT '1',
+    `id_superior` int DEFAULT NULL,
     `usuario_cadastro` int DEFAULT NULL,
     `usuario_edicao` int DEFAULT NULL,
     `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `data_edicao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	  FOREIGN KEY (`usuario_cadastro`) REFERENCES `usuarios`(`id`),
-	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`)
+	  FOREIGN KEY (`usuario_edicao`) REFERENCES `usuarios`(`id`),
+    FOREIGN KEY (`id_superior`) REFERENCES `categorias`(`id`)
 );
 
 CREATE TABLE `questionario` (
