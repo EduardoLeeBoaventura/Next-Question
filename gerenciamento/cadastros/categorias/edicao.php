@@ -19,6 +19,23 @@
             <label for="descricao-edit">Descrição</label>
             <textarea type="text" name="descricao" id="descricao-edit" class="form-control border border-dark" required></textarea>
           </div>
+          <div class="form-group">
+          <label for="categoria_superior-edit">Categoria Superior</label>
+            <select name="categoria_superior" id="categoria_superior-edit" class="select-select form-control" onchange="searchAcoesPrivilegio(this.value)">
+              <option class="fixed" value="0">selecione</option>
+              <?php
+                $lista_categorias = $categorias_handler->listar();
+              if ( $lista_categorias !== false) {
+                foreach ($lista_categorias as $info_categoria) {
+                  ?>
+                    <option class="fixed" value="<?= $info_categoria['ref'] ?>"> <?= $info_categoria['nome'] ?></option>
+                  <?php
+                }
+              } 
+              ?>
+            </select>
+          </div>
+
         </form>
       </div>
       <div class="modal-footer">

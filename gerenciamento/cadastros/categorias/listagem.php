@@ -61,6 +61,7 @@ $listagem_categorias = $categorias_handler->listar();
   </thead>
   <tbody id="listagem-categorias">
     <?php
+    if ( $lista_categorias !== false) {
       foreach($listagem_categorias as $k => $categorias_info){
         ?>
           <tr>
@@ -90,6 +91,7 @@ $listagem_categorias = $categorias_handler->listar();
           </tr>
         <?php
       }
+    }
     ?>
   </tbody>
 </table>

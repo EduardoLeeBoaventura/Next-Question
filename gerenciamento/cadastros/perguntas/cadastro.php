@@ -5,38 +5,59 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modal-add-usuariosLabel">Cadastrar Perguntas</h1>
+        <h1 class="modal-title fs-5" id="modal-add-usuariosLabel">Cadastrar Pergunta</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style="border: 1px solid #0005;border-width: 1px 0px 1px 0px;">
         <form id="form-modal-add" action="/api/post/perguntas/cadastro.php" method="post">
           <div class="form-group">
-            <label for="enunciado-add">Enunciado</label>
-            <input type="text" name="enunciado" id="enunciado-add" class="form-control border border-dark" required>
+            <label for="pergunta-add">Pergunta</label>
+            <textarea type="text" name="pergunta" id="pergunta-add" class="form-control border border-dark" required></textarea>
           </div>
-
           <div class="form-group">
-            <label for="descricao-add">Descrição</label>
-            <textarea type="text" name="descricao" id="descricao-add" class="form-control border border-dark" required></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="categoria_superior-add">Categoria Superior</label>
-            <select name="categoria_superior" id="categoria_superior-add" class="select-select form-control" onchange="searchAcoesPrivilegio(this.value)">
+            <label for="categorias">Categoria</label>
+            <select name="categorias[]" multiple id="categoria-add" class="select-select multiple form-control" onchange="searchAcoesPrivilegio(this.value)">
               <option class="fixed" value="0">Selecione</option>
-              <?php
-              if ( $lista_categorias !== false) {
-                $lista_categorias = $categorias_handler->listar();
 
+              <?php
+              $lista_categorias = $categorias_handler->listar();
+              if ($lista_categorias !== false) {
                 foreach ($lista_categorias as $info_categoria) {
-                  ?>
-                    <option value="<?= $info_categoria['ref'] ?>"> <?= $info_categoria['nome'] ?></option>
-                  <?php
+              ?>
+
+                  <option class="fixed" value="<?= $info_categoria['ref'] ?>"> <?= $info_categoria['nome'] ?></option>
+              <?php
                 }
-              } 
+              }
               ?>
             </select>
           </div>
+
+          <div class="form-group">
+            <label>Alternativas</label>
+            <ol type="a">
+              <li>
+                <input type="text" id="alternativa1" name="alternativa[]" multiple>
+                <input type="radio" id="alternativa1" name="gabarito" value="0">
+              </li>
+              <br>
+              <li>
+                <input type="text" id="alternativa2" name="alternativa[]" multiple>
+                <input type="radio" id="alternativa2" name="gabarito" value="1">
+              </li>
+              <br>
+              <li>
+                <input type="text" id="alternativa3" name="alternativa[]" multiple>
+                <input type="radio" id="alternativa3" name="gabarito" value="2">
+              </li>
+              <br>
+              <li>
+                <input type="text" id="alternativa4" name="alternativa[]" multiple>
+                <input type="radio" id="alternativa4" name="gabarito" value="3">
+              </li>
+            </ol>
+          </div>
+
         </form>
       </div>
       <div class="modal-footer">

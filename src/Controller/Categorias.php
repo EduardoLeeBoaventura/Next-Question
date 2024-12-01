@@ -17,6 +17,9 @@ class Categorias
 
   public function criar($data)
   {
+    if(empty($data['id_superior'])){
+      unset($data['id_superior']);
+    }
     $response = $this->model->insert($data);
     return $response;
   }

@@ -7,9 +7,12 @@
     $perguntas = new Perguntas();
 
     $dados_insert = [
-        "pergunta" => $_POST['pergunta'],
-        "opcoes"   => $_POST['opcoes'],
-        "coption"  => $_POST['coption']
+        "pergunta"         => $_POST['pergunta'],
+        "categorias"       => $_POST['categorias'],
+        "alternativa"     => $_POST['alternativa'],
+        "gabarito"         => $_POST['gabarito'],
+        "usuario_cadastro" => $_SESSION['id_usuario'],
+        "usuario_edicao"   => $_SESSION['id_usuario']
     ];
 
   $insert = $perguntas->criar($dados_insert);

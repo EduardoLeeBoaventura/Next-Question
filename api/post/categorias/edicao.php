@@ -8,6 +8,7 @@
     $dados_update = [
       "nome"             => $_POST['nome'],
       "descricao"        => $_POST['descricao'],
+      "id_superior"      => $categorias_handler->returnsIdByRef($_POST['categoria_superior']),
       "usuario_edicao"   => $_SESSION['id_usuario']
     ];
 

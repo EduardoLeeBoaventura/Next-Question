@@ -6,14 +6,16 @@
 
   if (!empty($_POST)) {
     $dados_update = [
-      "pergunta" => $_POST['pergunta'],
-      "opcoes"   => $_POST['opcoes'],
-      "coption"  => $_POST['coption']
+      "pergunta"       => $_POST['pergunta'],
+      "categorias"     => $_POST['categorias'],
+      "alternativa"   => $_POST['alternativa'],
+      "gabarito"       => $_POST['gabarito'],
+      "usuario_edicao" => $_SESSION['id_usuario']
     ];
 
   if(!empty($_POST)){
     $perguntas = new Perguntas();
-    $ref_registro = $categoria->returnsIdByRef($_POST['ref_registro']);
+    $ref_registro = $perguntas->returnsIdByRef($_POST['ref_registro']);
 
     $conditions = [
         ['ref', $_POST['ref_registro']]

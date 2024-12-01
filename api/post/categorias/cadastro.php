@@ -9,7 +9,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
     $dados_insert = [
         "nome"        => $_POST['nome'],
         "descricao"   => $_POST['descricao'],
-        "id_superior" => $categorias->returnsIdByRef($_POST['categoria_superior'])
+        "id_superior" => $categorias->returnsIdByRef($_POST['categoria_superior']),
+        "usuario_cadastro" => $_SESSION['id_usuario'],
+        "usuario_edicao"   => $_SESSION['id_usuario'],
     ];
 
   $insert = $categorias->criar($dados_insert);
