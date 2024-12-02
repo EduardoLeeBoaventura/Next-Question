@@ -18,9 +18,9 @@
     define("PAINEL_CONTENT", $includes);
   // definições para importação dos módulos da página
 
-  use System\Controller\NiveisAcessos;
+  use System\Controller\Questionario;
   
-  $niveis_acessos_handler = new NiveisAcessos();
+  $questionario_handler = new Questionario();
   
   $GLOBALS['item-sidebar'] = "niveis_acessos";
 ?>

@@ -23,7 +23,7 @@ class PerguntasConnCategorias
     $categorias = new Categorias();
     $perguntas  = new Perguntas();
     $data = [
-      "id_tipo"     => $categorias->returnsIdByRef($categorias),
+      "id_categoria"     => $categorias->returnsIdByRef($categorias),
       "id_pergunta" => $perguntas->returnsIdByRef($perguntas)
     ];
     $response = $this->model->insert($data);
@@ -40,7 +40,7 @@ class PerguntasConnCategorias
   public function excluir($categorias, $perguntas)
   {
     $conditions = [
-      " EXISTS(SELECT * FROM tipos TP WHERE TP.id = tipos_conn_perguntas.id_tipo AND TP.ref = '$categorias') ",
+      " EXISTS(SELECT * FROM categorias C WHERE C.id = tipos_conn_perguntas.id_tipo AND C.ref = '$categorias') ",
       " EXISTS(SELECT * FROM perguntas P WHERE P.id = tipos_conn_perguntas.id_pergunta AND P.ref = '$perguntas') "
     ];
 
@@ -53,16 +53,15 @@ class PerguntasConnCategorias
     return $response->result;
   }
 
-  public function listar($columns = null, $limit_min = 100, $limit_max = null)
+  public function listar($columns = null, $where, $limit_min = 100, $limit_max = null)
   {
     if(empty($columns)) {
       $columns = [
-        "T.nome",
-        "P.pergunta"
+        "C.nome"
       ];
     }
 
-    $response = $this->model->select($columns, null, null, null, null, $limit_min, $limit_max);
+    $response = $this->model->select($columns, $where, null, null, null, $limit_min, $limit_max);
 
     return $response->result;
   }

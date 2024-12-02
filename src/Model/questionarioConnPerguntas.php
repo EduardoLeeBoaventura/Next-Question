@@ -19,7 +19,7 @@
 
             $tables = [
                 "perguntas P" => [],
-                "questionario_conn_pergunta QCP" => ["QCP.id_pergunta = P.id"],
+                "questionario_conn_perguntas QCP" => ["QCP.id_pergunta = P.id"],
                 "vinculo_questionario VQ" => [["VQ.id", "QCP.id_vinculo"]],
             ];
 

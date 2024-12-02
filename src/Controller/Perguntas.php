@@ -7,6 +7,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
 use System\Model\Perguntas as ModelPerguntas;
 
 use System\Controller\PerguntasConnCategorias;
+use System\Controller\Categorias;
+use System\Controller\Alternativas;
 
 class Perguntas
 {
@@ -45,9 +47,6 @@ class Perguntas
       "id",
       "ref",
       "pergunta",
-      "tipo",
-      "opcoes",
-      "coption",
       "visibilidade"
     ];
 
@@ -68,15 +67,28 @@ class Perguntas
       $response = $perguntas->result;
 
       foreach ($response as $key => $value) {
-        $perguntas_com_categorias = new PerguntasConnCategorias();
-        $conditions = [
-          ["id_perguntas", $value['id']]
+        $alternativas_pergunta = new Alternativas();
+        $conditionsalt = [
+          ['id_pergunta', $response[$key]['id']]
         ];
-        $categorias = $perguntas_com_categorias->listar($conditions);
+        $alternativas = $alternativas_pergunta->listar($conditionsalt);
   
-        $response[$key]['categorias'] = $categorias;
+        
+        $response[$key]['alternativas'] = $alternativas;
+
+
+        $perguntas_conn_categorias_handler = new PerguntasConnCategorias();
+        $conditions_categorias = [
+          ["id_pergunta", $response[$key]['id']]
+        ];
+        $categorias_pergunta = $perguntas_conn_categorias_handler->listar(null, $conditions_categorias);
+        // dumpdie(true, $response);
+        $response[$key]['categorias'] = $categorias_pergunta;
       }
+      
     }
+    dumpdie(true, $response);
+
     return $response;
   }
   

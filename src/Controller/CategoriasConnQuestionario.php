@@ -5,9 +5,9 @@ namespace System\Controller;
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
-use System\Model\CategoriasConnQuestionario as ModelCategoriasConnQuestionario;
+use System\Model\CategoriasConnPerguntas as ModelCategoriasConnPerguntas;
 use System\Controller\Categorias;
-use System\Controller\Questionarios;
+use System\Controller\Questionario;
 
 class CategoriasConnQuestionario
 {
@@ -15,7 +15,7 @@ class CategoriasConnQuestionario
 
   public function __construct()
   {
-    $this->model = new ModelCategoriasConnQuestionario(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $this->model = new ModelCategoriasConnPerguntas(DB_HOST, DB_USER, DB_PASS, DB_NAME);
   }
 
   public function criar($questionario_id_ref, $categoria_id_ref, $ID = true)

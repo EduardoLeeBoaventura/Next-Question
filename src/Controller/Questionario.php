@@ -5,9 +5,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
 require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
 use System\Model\Questionario as ModelQuestionario;
-use System\Controller\Categorias;
-use System\Controller\PerguntasConnCategorias;
-use System\Controller\CategoriasConnQuestionario;
+use System\Controller\QuestionarioConnPerguntas;
+use System\Controller\VinculoQuestionario;
 
 class Questionario 
 {
@@ -23,20 +22,50 @@ class Questionario
       $response = $this->model->insert($data);
       return $response;
     }
-
-    public function iniciar($questionario, $categoria)
-    {
-      $perguntas = new PerguntasConnCategorias();
-      $categoria_conn = new CategoriasConnQuestionario();
-      $conn = $categoria_conn->criar($questionario, $categoria);
-      $conn['last_id_categoria'];
-
+    
+    public function listar($conditions = null, $limit_min = null, $limit_max = null){
       $columns = [
-        "p.pergunta"
+        "questionario.id",
+        "questionario.nome",
+        "questionario.descricao"
       ];
 
-      //fazer tratamento sobre a quantidade de perguntas
-      $perguntas->listar($columns, 0, 5);
+
+
+      
+      $questionario = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);
+      $response = $questionario->result; 
+
+      // dumpdie(true, $response);
+
+      foreach ($response as $k => $v) {
+        $vinculo_conditions = [
+          ['id_questionario', $response[$k]['id']]
+        ];
+
+        $vinculo_handler = new VinculoQuestionario();
+        $vinculo_resultado = $vinculo_handler->listar($vinculo_conditions);
+        // dumpDie(true, $vinculo_resultado);
+        array_push($response[$k], $vinculo_resultado);
+        // $response[$k] += $vinculo_resultado;
+
+
+        $QConnPerg_handler = new QuestionarioConnPerguntas();
+          $conditions = [
+            ["id_vinculo", $v['id']]
+          ];
+          $QConnPerg_resultado = $QConnPerg_handler->listar($conditions);
+          // dumpDie(true, $QConnPerg_resultado);
+          array_push($response[$k], $QConnPerg_resultado);
+          // $response[$k] += $QConnPerg_resultado;
+          
+        
+      }
+      // dumpDie(true, $response[0][0]);
+
+      $result = $response;
+
+      return $result;
     }
 
     public function atualizar($data, $conditions)

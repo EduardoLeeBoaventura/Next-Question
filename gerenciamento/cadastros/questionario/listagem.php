@@ -2,6 +2,10 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
 
 $listagem_questionario = $questionario_handler->listar();
+// echo '<pre>';
+// var_dump($listagem_questionario);
+// echo '</pre>';
+// dumpdie(true, $listagem_questionario[0][0]);
 ?>
 <div class="form-search bg-secondary rounded p-3 text-light">
   <form method="get">
@@ -79,10 +83,13 @@ $listagem_questionario = $questionario_handler->listar();
 <table class="table table-secondary table-striped">
   <thead>
     <tr>
+      <?php   ?>
       <th>##</th>
-      <th>Nome</th>
-      <th>Privilégios Associados</th>
-      <th>Situação</th>
+      <th>Questionário</th>
+      <th>Descrição</th>
+      <th>Qnt. Questões</th>
+      <th>Perguntas</th>
+      <th>Categorias</th>
       <th>Ações</th>
     </tr>
   </thead>
@@ -91,15 +98,42 @@ $listagem_questionario = $questionario_handler->listar();
 
     <?php
 
-
-    foreach ($lista_categorias as $info_categoria) {
+  
     ?>
       <tr>
+<?php foreach ($listagem_questionario as $keygeral => $vgeral) {
+?>
+        <td><?php echo $vgeral['id'] ?></td> 
+        <td><?php echo $vgeral['nome'] ?></td> 
+        <td><?php echo $vgeral['descricao'] ?></td>  
+        <td><?php echo count($vgeral[1]) ?></td>
+        <td>
+        <div style="background-color:#f1f1f1; border-radius:5px;">
+          <?php foreach ($vgeral[1] as $k => $v){
+              echo '<div>';
+              echo '<span style="color:black">' . $v['pergunta']. '</span>' . '<br>' ;
+                foreach ($v['alternativas'] as $keyalt => $valuealt) {
+                  if ($valuealt['gabarito'] == 1){
+                    $respostacorreta = 'style="color:green"';
+                  } else{
+                    $respostacorreta = '';
+                  };
+                  echo '<span ' . $respostacorreta . '> |' . $valuealt['alternativa'] . ' | </span>';
+                }
+              echo '</div>';
+          }
+          ?>
+        </div>
+        </td>
+        <td><?php foreach($vgeral[0] as $key => $value){
+          echo $value['nome']. '<br>';
+        } ?></td> 
 
-        <td>Nome</td> 
-        <td>Descrição</td> 
+
+        
+            
       </tr>
-    <?php
+    <?php  
     }
     ?>
 
