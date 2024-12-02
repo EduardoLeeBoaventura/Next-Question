@@ -17,6 +17,9 @@ class Categorias
 
   public function criar($data)
   {
+    if(empty($data['id_superior'])){
+      unset($data['id_superior']);
+    }
     $response = $this->model->insert($data);
     return $response;
   }
@@ -45,14 +48,25 @@ class Categorias
       "nome",
       "descricao", 
       "id_superior",
-      "status",
-      "visibilidade"
+      "status"
     ];
 
-    $tipos = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);
-    $response = $tipos->result; 
-    return  $response;
+    $where = [
+      ["visibilidade", 1],
+    ];
+
+    if (!empty($conditions)) {
+      array_push($where, ...$conditions);
+    }
+
+     //$response = $this->model->select($columns, $where, null, null, null, $limit_min, $limit_max);
+
+     $categorias = $this->model->select($columns, $where, null, null, null, $limit_min, $limit_max);
+     $response = $categorias->result; 
+     return  $response;
 }
+
+
 public function returnsIdByRef($ref)
   {
     $where = [

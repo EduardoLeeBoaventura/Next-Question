@@ -139,6 +139,21 @@
   "alternative": {},
   "related": []
 },
+"/api/get/categorias/excluir_categorias.php": {
+  "requirements": ["auth", "get"],
+  "alternative": {},
+  "related": []
+},
+"/api/get/perguntas/consulta_perguntas.php": {
+  "requirements": ["auth", "get"],
+  "alternative": {},
+  "related": []
+},
+"/api/get/perguntas/excluir_perguntas.php": {
+  "requirements": ["auth", "get"],
+  "alternative": {},
+  "related": []
+},
   "/api/get/usuarios/excluir_vinculo_privilegios.php": {
     "requirements": ["auth", "get"],
     "alternative": {},
@@ -208,13 +223,6 @@
     "alternative": {},
     "related": []
   },
-
-  "/cadastro_livre/usuarios/": {
-    "requirements": [],
-    "alternative": {},
-    "related": []
-  },
-
   "/api/post/categorias/cadastro.php": {
     "requirements": ["post"],
     "alternative": {},
@@ -222,6 +230,21 @@
   },
   "/api/post/categorias/edicao.php": {
     "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/perguntas/cadastro.php": {
+    "requirements": ["post"],
+    "alternative": {},
+    "related": []
+  },
+  "/api/post/perguntas/edicao.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  },
+  "/cadastro_livre/usuarios/": {
+    "requirements": [],
     "alternative": {},
     "related": []
   }

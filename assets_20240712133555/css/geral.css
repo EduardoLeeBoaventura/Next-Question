@@ -7,9 +7,9 @@ td, th{
   cursor: not-allowed;
 }
 
-.form-search{
+/* .form-search{
   display: none;
-}
+} */
 
 small{
   font-size: .7em;

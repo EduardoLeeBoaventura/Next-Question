@@ -1,11 +1,10 @@
 <?php
-
 namespace System\Controller;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "system_functions.php";
+require_once returnsPathFromHost("src", "Model", "database-handler-php", "Handlers", "SQL_CRUD.php");
 
-use System\Model\Perguntas as ModelPerguntas;
-
+use System\Model\Perguntas as ModelPergunta;
 use System\Controller\PerguntasConnCategorias;
 use System\Controller\Categorias;
 use System\Controller\Alternativas;
@@ -16,12 +15,32 @@ class Perguntas
 
   public function __construct()
   {
-    $this->model = new ModelPerguntas(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $this->model = new ModelPergunta(DB_HOST, DB_USER, DB_PASS, DB_NAME);
   }
 
   public function criar($data)
   {
+    $categorias = $data['categorias'];
+    unset($data['categorias']);
+
     $response = $this->model->insert($data);
+    if($response->result !== false){
+      $id_pergunta = $response->result;
+
+      $categorias_handler                = new Categorias();
+      $perguntas_conn_categorias_handler = new PerguntasConnCategorias();
+
+      foreach($categorias as $ref_categorias){
+        $id_categoria = $categorias_handler->returnsIdByRef($ref_categorias);
+
+        $response_perguntas_conn_categorias = $perguntas_conn_categorias_handler->criar($id_pergunta, $id_categoria);
+
+        if($response_perguntas_conn_categorias === false){
+          $response->result = false;
+          break;
+        }
+      }
+    }
     return $response;
   }
 
@@ -46,27 +65,25 @@ class Perguntas
     $columns = [
       "id",
       "ref",
-      "pergunta",
-      "visibilidade"
+      "pergunta"
     ];
 
-
-    $conditions_perguntas = [
-      ["visibilidade", 1]
+    $where = [
+      ["visibilidade", 1],
     ];
 
-    if(!empty($conditions)){
-      array_push($conditions_perguntas, ...$conditions);
+    if (!empty($conditions)) {
+      array_push($where, ...$conditions);
     }
 
-    $perguntas = $this->model->select($columns, $conditions, null, null, null, $limit_min, $limit_max);
-    $response = $perguntas->result;
+     //$response = $this->model->select($columns, $where, null, null, null, $limit_min, $limit_max);
 
-    $response = false;
-    if($perguntas->result !== false && arrayLength($perguntas->result) > 0){
-      $response = $perguntas->result;
+     $perguntas = $this->model->select($columns, $where, null, null, null, $limit_min, $limit_max);
+     $response = $perguntas->result; 
+     return  $response;
 
-      foreach ($response as $key => $value) {
+
+        foreach ($response as $key => $value) {
         $alternativas_pergunta = new Alternativas();
         $conditionsalt = [
           ['id_pergunta', $response[$key]['id']]
@@ -86,8 +103,9 @@ class Perguntas
         $response[$key]['categorias'] = $categorias_pergunta;
       }
       
-    }
-    dumpdie(true, $response);
+    
+  
+    // dumpdie(true, $response);
 
     return $response;
   }
@@ -100,7 +118,8 @@ class Perguntas
     ];
 
     $response = $this->model->select('id', $where);
-
+    
     return $response->result != false ? $response->result[0]['id'] : false;
   }
 }
+

@@ -18,11 +18,15 @@
     define("PAINEL_CONTENT", $includes);
   // definições para importação dos módulos da página
 
-  use System\Controller\Perguntas;
+ use System\Controller\Categorias;
+ use System\Controller\Perguntas;
+ use System\Controller\PerguntasConnCategorias;
+
+  $perguntas_handler  = new Perguntas();
+  $categorias_handler = new Categorias();
+  $perguntas_conn_categorias_handler = new PerguntasConnCategorias();
   
-  $niveis_acessos_handler = new Perguntas();
-  
-  $GLOBALS['item-sidebar'] = "Perguntas";
+  $GLOBALS['item-sidebar'] = "perguntas";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -30,7 +34,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SYSTEM - Perguntas</title>
+  <title>SYSTEM - Privilégios</title>
 
   <?php include_once returnsPathFromHost("src", "Componentes", "head-imports.php"); ?>
 </head>
