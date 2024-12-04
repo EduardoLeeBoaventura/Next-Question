@@ -38,22 +38,22 @@ require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "src" . DIRECTORY
             <ol type="a">
               <li>
                 <input type="text" id="alternativa1" name="alternativa[]" multiple>
-                <input type="radio" id="alternativa1" name="gabarito" value="0">
+                <input type="radio" id="alternativa1" name="gabarito" value="1">
               </li>
               <br>
               <li>
                 <input type="text" id="alternativa2" name="alternativa[]" multiple>
-                <input type="radio" id="alternativa2" name="gabarito" value="1">
+                <input type="radio" id="alternativa2" name="gabarito" value="2">
               </li>
               <br>
               <li>
                 <input type="text" id="alternativa3" name="alternativa[]" multiple>
-                <input type="radio" id="alternativa3" name="gabarito" value="2">
+                <input type="radio" id="alternativa3" name="gabarito" value="3">
               </li>
               <br>
               <li>
                 <input type="text" id="alternativa4" name="alternativa[]" multiple>
-                <input type="radio" id="alternativa4" name="gabarito" value="3">
+                <input type="radio" id="alternativa4" name="gabarito" value="4">
               </li>
             </ol>
           </div>

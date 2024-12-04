@@ -16,10 +16,25 @@ class Alternativas
   }
 
   public function criar($data)
-  {
-    $response = $this->model->insert($data);
+{
+    $alternativas = $data["alternativa"];
+    foreach ($alternativas as $alternativa) {
+        $final_data = [
+            "id_pergunta" => $data["id_pergunta"],
+            "alternativa" => $alternativa,
+            "gabarito" => $data["gabarito"]
+        ];
+        $response = $this->model->insert($final_data);
+
+        if($response === false){
+          $response->result = false;
+          break;
+        }
+    }
+
     return $response;
-  }
+}
+
 
   public function atualizar($data, $conditions)
   {

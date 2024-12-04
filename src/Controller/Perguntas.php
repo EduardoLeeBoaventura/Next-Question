@@ -23,12 +23,26 @@ class Perguntas
     $categorias = $data['categorias'];
     unset($data['categorias']);
 
+    $data_alternativas = ['alternativa' => $data['alternativa'], 'gabarito' => $data['gabarito']];
+    unset($data['alternativa'], $data['gabarito']);
+
     $response = $this->model->insert($data);
     if($response->result !== false){
       $id_pergunta = $response->result;
+      
+      $data_alternativas = ['id_pergunta' => $id_pergunta] + $data_alternativas;
 
+      var_dump($data_alternativas);
+      $alternativas_handler              = new Alternativas();
       $categorias_handler                = new Categorias();
       $perguntas_conn_categorias_handler = new PerguntasConnCategorias();
+
+      $response_alternativas = $alternativas_handler->criar($data_alternativas);
+
+      if($response_alternativas === false){
+        $response->result = false;
+      }
+
 
       foreach($categorias as $ref_categorias){
         $id_categoria = $categorias_handler->returnsIdByRef($ref_categorias);
