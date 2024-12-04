@@ -69,7 +69,7 @@ if(haveAccessToPage("Cadastro de Perguntas")){
   
     <!-- QUESTIONARIOS -->
     <li class="nav-item <?= @$GLOBALS['item-sidebar'] == "questionarios" ? "active" : "" ?>" title="Questionarios">
-      <a href="/gerenciamento/cadastros/questionarios/" class="nav-link text-white d-flex align-items-center" style="gap: 10px;">
+      <a href="/gerenciamento/cadastros/questionario/" class="nav-link text-white d-flex align-items-center" style="gap: 10px;">
         <span class="material-symbols-outlined">forms_add_on</span>
         <span class="text">Questionarios</span>
       </a>

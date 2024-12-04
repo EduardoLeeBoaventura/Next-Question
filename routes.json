@@ -259,12 +259,12 @@
     "related": []
   }, 
 
-  "/api/post/questionarios/cadastro.php": {
+  "/api/post/questionario/cadastro.php": {
     "requirements": ["post"],
     "alternative": {},
     "related": []
   },
-  "/api/post/questionarios/edicao.php": {
+  "/api/post/questionario/edicao.php": {
     "requirements": ["auth", "post"],
     "alternative": {},
     "related": []
