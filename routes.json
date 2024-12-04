@@ -77,8 +77,8 @@
     ]
   }, 
 
-  "/gerenciamento/cadastros/questionarios/": {
-    "title": "Cadastro de Questionarios",
+  "/gerenciamento/cadastros/questionario/": {
+    "title": "Cadastro de Questionario",
     "privilege": "C|R+|U+|D+",
     "requirements": ["auth", "privilege"],
     "alternative": {
@@ -86,9 +86,9 @@
       "privilege": "/"
     },
     "related": [
-      "/gerenciamento/cadastros/questionarios/cadastro.php",
-      "/gerenciamento/cadastros/questionarios/listagem.php",
-      "/gerenciamento/cadastros/questionarios/edicao.php"
+      "/gerenciamento/cadastros/questionario/cadastro.php",
+      "/gerenciamento/cadastros/questionario/listagem.php",
+      "/gerenciamento/cadastros/questionario/edicao.php"
     ]
   },
   
