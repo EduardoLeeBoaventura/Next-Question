@@ -55,14 +55,29 @@ if(haveAccessToPage("Cadastro de Perguntas")){
     <!-- PERGUNTAS -->
     <li class="nav-item <?= @$GLOBALS['item-sidebar'] == "perguntas" ? "active" : "" ?>" title="Perguntas">
       <a href="/gerenciamento/cadastros/perguntas/" class="nav-link text-white d-flex align-items-center" style="gap: 10px;">
-        <span class="material-symbols-outlined">forms_add_on</span>
+        <span class="material-symbols-outlined">event_list</span>
         <span class="text">Perguntas</span>
       </a>
     </li>
     <!-- PERGUNTAS \. -->
   <?php
-        }
-        
+        } 
+
+
+        if(haveAccessToPage("Cadastro de Questionarios")){
+  ?>
+  
+    <!-- QUESTIONARIOS -->
+    <li class="nav-item <?= @$GLOBALS['item-sidebar'] == "questionarios" ? "active" : "" ?>" title="Questionarios">
+      <a href="/gerenciamento/cadastros/questionarios/" class="nav-link text-white d-flex align-items-center" style="gap: 10px;">
+        <span class="material-symbols-outlined">forms_add_on</span>
+        <span class="text">Questionarios</span>
+      </a>
+    </li>
+    <!-- QUESTIONARIOS \. -->
+  <?php
+        } 
+
         if(haveAccessToPage("Painel de Emissões")){
           ?>
             <!-- EMISSÕES -->

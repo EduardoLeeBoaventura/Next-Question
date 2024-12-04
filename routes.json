@@ -71,9 +71,24 @@
       "privilege": "/"
     },
     "related": [
-      "/gerenciamento/cadastros/perguntas/cadastro.php",
       "/gerenciamento/cadastros/perguntas/listagem.php",
+      "/gerenciamento/cadastros/perguntas/cadastro.php",
       "/gerenciamento/cadastros/perguntas/edicao.php"
+    ]
+  }, 
+
+  "/gerenciamento/cadastros/questionarios/": {
+    "title": "Cadastro de Questionarios",
+    "privilege": "C|R+|U+|D+",
+    "requirements": ["auth", "privilege"],
+    "alternative": {
+      "auth": "/login.php",
+      "privilege": "/"
+    },
+    "related": [
+      "/gerenciamento/cadastros/questionarios/cadastro.php",
+      "/gerenciamento/cadastros/questionarios/listagem.php",
+      "/gerenciamento/cadastros/questionarios/edicao.php"
     ]
   },
   
@@ -242,7 +257,19 @@
     "requirements": ["auth", "post"],
     "alternative": {},
     "related": []
+  }, 
+
+  "/api/post/questionarios/cadastro.php": {
+    "requirements": ["post"],
+    "alternative": {},
+    "related": []
   },
+  "/api/post/questionarios/edicao.php": {
+    "requirements": ["auth", "post"],
+    "alternative": {},
+    "related": []
+  }, 
+  
   "/cadastro_livre/usuarios/": {
     "requirements": [],
     "alternative": {},
