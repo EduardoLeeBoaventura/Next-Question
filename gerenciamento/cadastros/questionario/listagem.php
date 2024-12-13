@@ -73,7 +73,7 @@ $listagem_questionario = $questionario_handler->listar();
   ?>
     <button type="button" class="col-sm-2 btn btn-default text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-add">
       <span class="material-symbols-outlined">add</span>
-      Novo Nível
+      Novo Questionario
     </button>
   <?php
   }
